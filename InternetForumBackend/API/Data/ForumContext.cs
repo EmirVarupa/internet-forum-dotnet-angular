@@ -12,6 +12,8 @@ namespace API.Data
     {
         public DbSet<UserStatus> UserStatuses { get; set; }
 
+        public DbSet<Role> Roles { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -19,6 +21,9 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserStatusConfig());
+
+            modelBuilder.ApplyConfiguration(new RoleConfig());
+
 
             base.OnModelCreating(modelBuilder);
         }
