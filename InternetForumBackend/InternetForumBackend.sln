@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetForumBackend", "InternetForumBackend\InternetForumBackend.csproj", "{0FF2C486-5E26-47A1-A628-ADFF77B7A5D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{62334A9B-A315-4D9D-A6D4-CB98080FA938}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0FF2C486-5E26-47A1-A628-ADFF77B7A5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FF2C486-5E26-47A1-A628-ADFF77B7A5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FF2C486-5E26-47A1-A628-ADFF77B7A5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FF2C486-5E26-47A1-A628-ADFF77B7A5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62334A9B-A315-4D9D-A6D4-CB98080FA938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62334A9B-A315-4D9D-A6D4-CB98080FA938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62334A9B-A315-4D9D-A6D4-CB98080FA938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62334A9B-A315-4D9D-A6D4-CB98080FA938}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7501A90C-5AB3-4C3A-BB9B-7DE20D359A0E}
+		SolutionGuid = {08A81C04-AF28-4691-A83D-0DFAEAF03847}
 	EndGlobalSection
 EndGlobal
