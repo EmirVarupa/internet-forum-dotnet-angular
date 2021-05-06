@@ -14,6 +14,8 @@ namespace API.Data
 
         public DbSet<Role> Roles { get; set; }
 
+        public DbSet<Tag> Tags { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -24,6 +26,7 @@ namespace API.Data
 
             modelBuilder.ApplyConfiguration(new RoleConfig());
 
+            modelBuilder.ApplyConfiguration(new TagConfig());
 
             base.OnModelCreating(modelBuilder);
         }

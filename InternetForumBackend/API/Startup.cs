@@ -48,9 +48,11 @@ namespace API
 
             services.AddScoped<IUserStatusRepo, UserStatusRepo>();
             services.AddScoped<IRoleRepo, RoleRepo>();
+            services.AddScoped<ITagRepo, TagRepo>();
 
             services.AddScoped<IUserStatusService, UserStatusService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ITagService, TagService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

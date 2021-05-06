@@ -25,21 +25,21 @@ namespace API.Data.Services
 
         public async Task<RoleReadDto> GetRoleByIdAsync(int id)
         {
-            var userStatus = await _repo.GetRoleByIdAsync(id);
+            var role = await _repo.GetRoleByIdAsync(id);
 
-            if (userStatus == null)
+            if (role == null)
             {
                 return null;
             }
 
-            return _mapper.Map<RoleReadDto>(userStatus);
+            return _mapper.Map<RoleReadDto>(role);
         }
 
         public async Task AddRoleAsync(RoleCreateDto roleCreateDto)
         {
-            var userStatus = _mapper.Map<Role>(roleCreateDto);
+            var role = _mapper.Map<Role>(roleCreateDto);
 
-            await _repo.AddRoleAsync(userStatus);
+            await _repo.AddRoleAsync(role);
 
         }
 
