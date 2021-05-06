@@ -19,6 +19,7 @@ namespace API.Data.Services
             _repo = repo;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<Tag>> GetTagAsync()
         {
             return await _repo.GetTagAsync();
@@ -28,10 +29,7 @@ namespace API.Data.Services
         {
             var tag = await _repo.GetTagByIdAsync(id);
 
-            if (tag == null)
-            {
-                return null;
-            }
+            if (tag == null) return null;
 
             return _mapper.Map<TagReadDto>(tag);
         }

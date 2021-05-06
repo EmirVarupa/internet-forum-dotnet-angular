@@ -33,10 +33,7 @@ namespace API.Controllers
         {
             var userStatus = await _service.GetRoleByIdAsync(id);
 
-            if (userStatus == null)
-            {
-                return NotFound();
-            }
+            if (userStatus == null) return NotFound();
 
             return Ok(userStatus);
         }
@@ -55,10 +52,7 @@ namespace API.Controllers
         {
             var result = await _service.UpdateRoleAsync(id, roleUpdateDto);
 
-            if (!result)
-            {
-                return BadRequest("Update failed!");
-            }
+            if (!result) return BadRequest("Update failed!");
 
             return NoContent();
         }

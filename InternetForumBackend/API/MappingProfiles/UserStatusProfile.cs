@@ -18,6 +18,5 @@ namespace API.MappingProfiles
 
             CreateMap<UserStatusUpdateDto, UserStatus>();
         }
-        
     }
 }

@@ -39,10 +39,7 @@ namespace API.Data.Repos
         {
             var userStatusFromDb = await GetUserStatusByIdAsync(id);
 
-            if (userStatusFromDb == null)
-            {
-                return false;
-            }
+            if (userStatusFromDb == null) return false;
 
             userStatusFromDb.StatusName = userStatus.StatusName;
 

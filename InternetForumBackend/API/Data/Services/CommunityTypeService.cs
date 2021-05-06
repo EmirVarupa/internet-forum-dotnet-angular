@@ -13,11 +13,13 @@ namespace API.Data.Services
     {
         private readonly ICommunityTypeRepo _repo;
         private readonly IMapper _mapper;
+
         public CommunityTypeService(ICommunityTypeRepo repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<CommunityType>> GetCommunityTypeAsync()
         {
             return await _repo.GetCommunityTypeAsync();
@@ -27,10 +29,7 @@ namespace API.Data.Services
         {
             var communityType = await _repo.GetCommunityTypeByIdAsync(id);
 
-            if (communityType == null)
-            {
-                return null;
-            }
+            if (communityType == null) return null;
 
             return _mapper.Map<CommunityTypeReadDto>(communityType);
         }
@@ -40,7 +39,6 @@ namespace API.Data.Services
             var communityType = _mapper.Map<CommunityType>(communityTypeCreateDto);
 
             await _repo.AddCommunityTypeAsync(communityType);
-
         }
 
         public async Task<bool> UpdateCommunityTypeAsync(int id, CommunityTypeUpdateDto communityTypeUpdateDto)

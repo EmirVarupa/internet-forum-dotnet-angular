@@ -15,6 +15,7 @@ namespace API.Data.Repos
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Tag>> GetTagAsync()
         {
             return await _context.Tags.ToListAsync();
@@ -38,10 +39,7 @@ namespace API.Data.Repos
         {
             var tagFromDb = await GetTagByIdAsync(id);
 
-            if (tagFromDb == null)
-            {
-                return false;
-            }
+            if (tagFromDb == null) return false;
 
             tagFromDb.TagName = tag.TagName;
 

@@ -32,10 +32,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetTagByIdAsync(int id)
         {
             var tag = await _service.GetTagByIdAsync(id);
-            if (tag == null)
-            {
-                return NotFound();
-            }
+            if (tag == null) return NotFound();
 
             return Ok(tag);
         }
@@ -53,10 +50,7 @@ namespace API.Controllers
         {
             var result = await _service.UpdateTagAsync(id, tagUpdateDto);
 
-            if (!result)
-            {
-                return BadRequest("Update failed!");
-            }
+            if (!result) return BadRequest("Update failed!");
 
             return NoContent();
         }

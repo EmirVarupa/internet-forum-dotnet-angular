@@ -13,11 +13,13 @@ namespace API.Data.Services
     {
         private readonly IRoleRepo _repo;
         private readonly IMapper _mapper;
+
         public RoleService(IRoleRepo repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<Role>> GetRoleAsync()
         {
             return await _repo.GetRoleAsync();
@@ -27,10 +29,7 @@ namespace API.Data.Services
         {
             var role = await _repo.GetRoleByIdAsync(id);
 
-            if (role == null)
-            {
-                return null;
-            }
+            if (role == null) return null;
 
             return _mapper.Map<RoleReadDto>(role);
         }
@@ -40,7 +39,6 @@ namespace API.Data.Services
             var role = _mapper.Map<Role>(roleCreateDto);
 
             await _repo.AddRoleAsync(role);
-
         }
 
         public async Task<bool> UpdateRoleAsync(int id, RoleUpdateDto roleUpdateDto)

@@ -7,23 +7,20 @@ namespace API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CommunityTypes",
-                columns: table => new
+                "CommunityTypes",
+                table => new
                 {
-                    TypeId = table.Column<int>(type: "int", nullable: false)
+                    TypeId = table.Column<int>("int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TypeName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    TypeName = table.Column<string>("nvarchar(50)", maxLength: 50, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CommunityTypes", x => x.TypeId);
-                });
+                constraints: table => { table.PrimaryKey("PK_CommunityTypes", x => x.TypeId); });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CommunityTypes");
+                "CommunityTypes");
         }
     }
 }

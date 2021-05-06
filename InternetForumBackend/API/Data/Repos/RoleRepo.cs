@@ -15,6 +15,7 @@ namespace API.Data.Repos
         {
             _context = context;
         }
+
         public async Task<IEnumerable<Role>> GetRoleAsync()
         {
             return await _context.Roles.ToListAsync();
@@ -38,10 +39,7 @@ namespace API.Data.Repos
         {
             var roleFromDb = await GetRoleByIdAsync(id);
 
-            if (roleFromDb == null)
-            {
-                return false;
-            }
+            if (roleFromDb == null) return false;
 
             roleFromDb.RoleName = role.RoleName;
 

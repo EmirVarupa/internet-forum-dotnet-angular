@@ -15,6 +15,7 @@ namespace API.Data.Repos
         {
             _context = context;
         }
+
         public async Task<IEnumerable<CommunityType>> GetCommunityTypeAsync()
         {
             return await _context.CommunityTypes.ToListAsync();
@@ -38,10 +39,7 @@ namespace API.Data.Repos
         {
             var communityTypeFromDb = await GetCommunityTypeByIdAsync(id);
 
-            if (communityTypeFromDb == null)
-            {
-                return false;
-            }
+            if (communityTypeFromDb == null) return false;
 
             communityTypeFromDb.TypeName = communityType.TypeName;
 
