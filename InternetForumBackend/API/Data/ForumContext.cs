@@ -16,6 +16,8 @@ namespace API.Data
 
         public DbSet<Tag> Tags { get; set; }
 
+        public DbSet<CommunityType> CommunityTypes { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -27,6 +29,8 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new RoleConfig());
 
             modelBuilder.ApplyConfiguration(new TagConfig());
+
+            modelBuilder.ApplyConfiguration(new CommunityTypeConfig());
 
             base.OnModelCreating(modelBuilder);
         }
