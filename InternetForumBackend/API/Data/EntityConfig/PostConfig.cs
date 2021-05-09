@@ -33,7 +33,7 @@ namespace API.Data.EntityConfig
                 .HasForeignKey(p => p.CommunityId);
 
             builder.HasOne(p => p.User)
-                .WithMany(r => r.Posts)
+                .WithMany(u => u.Posts)
                 .HasForeignKey(p => p.UserId);
         }
     }

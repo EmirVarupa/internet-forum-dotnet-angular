@@ -33,6 +33,8 @@ namespace API.Data.Models
 
         public int ViewsCount { get; set; }
 
+        public ICollection<PostComment> PostComments { get; set; }
+
         public Post()
         {
             DateCreated = DateTime.Now;
