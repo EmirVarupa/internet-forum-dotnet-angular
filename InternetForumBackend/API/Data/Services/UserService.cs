@@ -43,9 +43,9 @@ namespace API.Data.Services
 
         public async Task<bool> UpdateUserByIdAsync(int id, UserUpdateDto userUpdateDto)
         {
-            var todo = _mapper.Map<User>(userUpdateDto);
+            var user = _mapper.Map<User>(userUpdateDto);
 
-            return await _repo.UpdateUserByIdAsync(id, todo);
+            return await _repo.UpdateUserByIdAsync(id, user);
         }
     }
 }

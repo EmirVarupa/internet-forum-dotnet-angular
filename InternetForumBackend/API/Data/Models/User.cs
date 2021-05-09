@@ -32,6 +32,8 @@ namespace API.Data.Models
 
         public string? ImageUrl { get; set; }
 
+        public ICollection<Post> Posts { get; set; }
+
         public User()
         {
             DateCreated = DateTime.Now;

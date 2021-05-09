@@ -16,5 +16,7 @@ namespace API.Data.Models
         public string CommunityName { get; set; }
 
         public string CommunitySummary { get; set; }
+
+        public ICollection<Post> Posts { get; set; }
     }
 }

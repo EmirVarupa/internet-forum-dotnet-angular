@@ -49,6 +49,7 @@ namespace API
             services.AddScoped<ICommunityTypeRepo, CommunityTypeRepo>();
             services.AddScoped<IUserRepo, UserRepo>();
             services.AddScoped<ICommunityRepo, CommunityRepo>();
+            services.AddScoped<IPostRepo, PostRepo>();
 
             services.AddScoped<IUserStatusService, UserStatusService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -56,6 +57,7 @@ namespace API
             services.AddScoped<ICommunityTypeService, CommunityTypeService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICommunityService, CommunityService>();
+            services.AddScoped<IPostService, PostService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

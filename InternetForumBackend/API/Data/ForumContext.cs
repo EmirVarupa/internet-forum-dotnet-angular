@@ -22,6 +22,8 @@ namespace API.Data
 
         public DbSet<Community> Communities { get; set; }
 
+        public DbSet<Post> Posts { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -39,6 +41,8 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new UserConfig());
 
             modelBuilder.ApplyConfiguration(new CommunityConfig());
+
+            modelBuilder.ApplyConfiguration(new PostConfig());
 
             base.OnModelCreating(modelBuilder);
         }

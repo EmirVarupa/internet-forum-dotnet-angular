@@ -43,9 +43,9 @@ namespace API.Data.Services
 
         public async Task<bool> UpdateCommunityByIdAsync(int id, CommunityUpdateDto communityUpdateDto)
         {
-            var todo = _mapper.Map<Community>(communityUpdateDto);
+            var community = _mapper.Map<Community>(communityUpdateDto);
 
-            return await _repo.UpdateCommunityByIdAsync(id, todo);
+            return await _repo.UpdateCommunityByIdAsync(id, community);
         }
     }
 }
