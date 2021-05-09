@@ -18,6 +18,10 @@ namespace API.Data
 
         public DbSet<CommunityType> CommunityTypes { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Community> Communities { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -31,6 +35,10 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new TagConfig());
 
             modelBuilder.ApplyConfiguration(new CommunityTypeConfig());
+
+            modelBuilder.ApplyConfiguration(new UserConfig());
+
+            modelBuilder.ApplyConfiguration(new CommunityConfig());
 
             base.OnModelCreating(modelBuilder);
         }

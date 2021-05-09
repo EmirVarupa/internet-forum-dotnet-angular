@@ -4,47 +4,22 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Migrations
 {
     [DbContext(typeof(ForumContext))]
-    partial class ForumContextModelSnapshot : ModelSnapshot
+    [Migration("20210509145927_UsersTable")]
+    partial class UsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("API.Data.Models.Community", b =>
-                {
-                    b.Property<int>("CommunityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CommunityName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("CommunitySummary")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("CommunityTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommunityId");
-
-                    b.HasIndex("CommunityTypeId");
-
-                    b.ToTable("Communities");
-                });
 
             modelBuilder.Entity("API.Data.Models.CommunityType", b =>
                 {
@@ -168,17 +143,6 @@ namespace API.Migrations
                     b.ToTable("UserStatuses");
                 });
 
-            modelBuilder.Entity("API.Data.Models.Community", b =>
-                {
-                    b.HasOne("API.Data.Models.CommunityType", "CommunityType")
-                        .WithMany("Communities")
-                        .HasForeignKey("CommunityTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CommunityType");
-                });
-
             modelBuilder.Entity("API.Data.Models.User", b =>
                 {
                     b.HasOne("API.Data.Models.Role", "Role")
@@ -196,11 +160,6 @@ namespace API.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("UserStatus");
-                });
-
-            modelBuilder.Entity("API.Data.Models.CommunityType", b =>
-                {
-                    b.Navigation("Communities");
                 });
 
             modelBuilder.Entity("API.Data.Models.Role", b =>
