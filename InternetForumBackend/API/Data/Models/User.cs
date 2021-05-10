@@ -36,6 +36,8 @@ namespace API.Data.Models
 
         public ICollection<PostComment> PostComments { get; set; }
 
+        public ICollection<UserCommunityAdmin> UserCommunityAdmins { get; set; }
+
         public User()
         {
             DateCreated = DateTime.Now;

@@ -28,6 +28,8 @@ namespace API.Data
 
         public DbSet<PostTag> PostTags { get; set; }
 
+        public DbSet<UserCommunityAdmin> UserCommunityAdmins { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -51,6 +53,8 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new PostCommentConfig());
 
             modelBuilder.ApplyConfiguration(new PostTagConfig());
+
+            modelBuilder.ApplyConfiguration(new UserCommunityAdminConfig());
 
             base.OnModelCreating(modelBuilder);
         }

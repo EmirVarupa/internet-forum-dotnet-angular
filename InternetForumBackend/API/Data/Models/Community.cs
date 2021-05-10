@@ -18,5 +18,7 @@ namespace API.Data.Models
         public string CommunitySummary { get; set; }
 
         public ICollection<Post> Posts { get; set; }
+
+        public ICollection<UserCommunityAdmin> UserCommunityAdmins { get; set; }
     }
 }

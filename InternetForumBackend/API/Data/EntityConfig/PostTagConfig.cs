@@ -13,6 +13,8 @@ namespace API.Data.EntityConfig
         public void Configure(EntityTypeBuilder<PostTag> builder)
         {
             builder.HasKey(p => new {p.PostId, p.TagId});
+
+            builder.ToTable("Post_Tag");
         }
     }
 }
