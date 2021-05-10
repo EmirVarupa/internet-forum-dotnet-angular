@@ -26,6 +26,8 @@ namespace API.Data
 
         public DbSet<PostComment> PostComments { get; set; }
 
+        public DbSet<PostTag> PostTags { get; set; }
+
         public ForumContext(DbContextOptions<ForumContext> options) : base(options)
         {
         }
@@ -47,6 +49,8 @@ namespace API.Data
             modelBuilder.ApplyConfiguration(new PostConfig());
 
             modelBuilder.ApplyConfiguration(new PostCommentConfig());
+
+            modelBuilder.ApplyConfiguration(new PostTagConfig());
 
             base.OnModelCreating(modelBuilder);
         }

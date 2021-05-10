@@ -15,5 +15,7 @@ namespace API.Data.Models
         /// Tag name
         /// </summary>
         public string TagName { get; set; }
+
+        public ICollection<PostTag> PostTags { get; set; }
     }
 }
