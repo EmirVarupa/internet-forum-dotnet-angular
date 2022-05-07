@@ -1,0 +1,39 @@
+<section fxLayoutAlign="center center" fxLayout="column">
+    <div fxLayoutAlign="start start" fxLayout="column">
+        <mat-card>
+            <mat-card-title>{{ post.postTitle }}</mat-card-title>
+            <mat-card-content>{{ post.postContent }} </mat-card-content>
+            <mat-card-actions div fxLayout="row" fxLayoutAlign="space-between none">
+                <div>
+                    <button class="btn-inactive" mat-button color="accent">Like</button>
+                    <button class="btn-inactive" mat-button color="accent">1 Comment</button>
+                    <button class="btn-inactive" mat-button color="accent">Share</button>
+                </div>
+                <div>
+                    <button mat-button disabled>85.4k Views</button>
+                    <button mat-button disabled>6 hours ago</button>
+                </div>
+            </mat-card-actions>
+        </mat-card>
+
+        <!-- POST COMMENTS -->
+        <mat-card>
+            <mat-card-title>COMMENTS</mat-card-title>
+            <mat-card class="comment" *ngFor="let comment of postComments">
+                <mat-card-title>{{ comment.commentContent }}</mat-card-title>
+                <mat-card-content>{{ comment.dateCreated | date:'MMM d, y, h:mm a' }} </mat-card-content>
+                <mat-card-actions div fxLayout="row" fxLayoutAlign="space-between none">
+                    <div>
+                        <button class="btn-inactive" mat-button color="accent">Like</button>
+                        <button class="btn-inactive" mat-button color="accent">1 Comment</button>
+                        <button class="btn-inactive" mat-button color="accent">Share</button>
+                    </div>
+                    <div>
+                        <button mat-button disabled>12.4k Likes</button>
+                        <button mat-button disabled>{{ comment.dateCreated | date:'MMM d, y, h:mm a' }}</button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        </mat-card>
+    </div>
+</section>

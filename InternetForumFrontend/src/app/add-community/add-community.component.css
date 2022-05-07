@@ -1,0 +1,116 @@
+mat-form-field {
+    width: 80%;
+}
+
+.buttons {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-left: 100px;
+}
+
+.button2 {
+    margin-right: 20px;
+}
+
+.create-button {
+    margin-right: 20px;
+}
+
+.text-area {
+    height: 250px;
+}
+
+.radio-button {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+
+/* input {
+    font-size: 20px;
+    border: none;
+    width: 300px;
+} */
+
+
+/* mat-drawer-container {
+    height: 400px;
+} */
+
+
+/* mat-drawer {
+    display: block;
+    width: 400px;
+} */
+
+
+/* 
+.opis {
+    font-size: 15px;
+} */
+
+
+/* 
+mat-drawer-content {
+    width: 200px;
+    width: 100%;
+} */
+
+
+/* 
+.title {
+    font-size: 25px;
+} */
+
+
+/* 
+.item {
+    display: flex;
+} */
+
+
+/* 
+.cat-select {
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-right: 100px;
+    height: 100px;
+    border-radius: 10px;
+} */
+
+
+/* .att {
+    margin-top: 50px;
+    margin-left: 10px;
+} */
+
+
+/* .selected {
+    margin-top: 30px;
+    width: 150px;
+    margin-left: 50px;
+    border-radius: 10px;
+}
+
+.selected2 {
+    width: 150px;
+    margin-left: 40px;
+}
+
+.label {
+    margin-top: 20px;
+    margin-left: 10px;
+} */
+
+
+/* .picker {
+    width: 150px;
+    display: block;
+    margin-left: 60px;
+}
+
+.pickes {
+    margin-top: 20px;
+    margin-left: 50px;
+} */

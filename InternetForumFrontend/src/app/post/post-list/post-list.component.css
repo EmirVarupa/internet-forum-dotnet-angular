@@ -1,0 +1,23 @@
+mat-card {
+    width: 50%;
+    margin-top: 8px;
+}
+
+.btn-add {
+    width: 100%;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.btn-inactive {
+    color: #ffffff4d;
+}
+
+.card-add {
+    box-sizing: content-box;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}

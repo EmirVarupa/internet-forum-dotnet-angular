@@ -1,0 +1,27 @@
+/* .example-spacer {
+    flex: 1 1 auto;
+} */
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover,
+a:active {
+    color: lightgray;
+}
+
+.navigation-items {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+/* TODO: NAV-CAPTION SHOULD BE IN SIDENAV-LIST, I SHOULD PUT IT BACK, BUT CHECK IF IT CHANGES SOMETHING BEFOREHAND */
+
+.nav-caption {
+    display: inline-block;
+    padding-left: 10px;
+}

@@ -1,0 +1,32 @@
+<!-- <mat-sidenav-container class="example-container">
+    TODO: ADD PROPERTY BINDING SO THAT HEADER CAN CLOSE THE SIDENAV
+    <mat-sidenav mode="side" opened>
+        Communities
+        <mat-selection-list #shoes [multiple]="false">
+            <mat-list-option *ngFor="let community of communities" [value]="community">
+                {{community.communityName}}
+            </mat-list-option>
+        </mat-selection-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content>Community content
+        TODO: list posts
+        <mat-card *ngFor="let post of posts" [value]="post">
+
+        </mat-card>
+        <br>
+        <button mat-raised-button (click)="addCommunity()">+</button>
+    </mat-sidenav-content>
+</mat-sidenav-container> -->
+
+<mat-nav-list>
+    <a mat-list-item *ngFor="let community of communities" routerLink="/signup" (click)="onClose()">
+        <span class="nav-caption">{{community.communityName}}</span>
+    </a>
+    <mat-list-item>
+        <button mat-icon-button (click)="onLogout()">
+            <mat-icon>eject</mat-icon>
+            <span class="nav-caption">Logout</span>
+        </button>
+    </mat-list-item>
+</mat-nav-list>

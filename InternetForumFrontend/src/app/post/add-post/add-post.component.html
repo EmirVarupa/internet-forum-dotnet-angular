@@ -1,0 +1,44 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #taskForm="ngForm">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <!-- TODO: SHOW COMMUNITY AND CHANGE COMMUNITY WITH DROPDOWN -->
+        <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+        <mat-menu #menu="matMenu" name="community" [(ngModel)]="newPost.communityId">
+            <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button>
+            <button class="radio-button" *ngFor="let community of communities" [value]="community.communityId">
+                {{community.communityName}}</button>
+        </mat-menu> -->
+
+        <mat-form-field class="example-form-field title">
+            <mat-label class="title">Community ID</mat-label>
+            <input matInput #input maxlength="50" type="text" name="communityId" #communityId="ngModel" [(ngModel)]="newPost.communityId" required [class.invalid]="title.invalid && title.touched">
+        </mat-form-field>
+        <mat-form-field class="example-form-field title">
+            <mat-label class="title">User ID</mat-label>
+            <input matInput #input maxlength="50" type="text" name="userId" #userId="ngModel" [(ngModel)]="newPost.userId" required [class.invalid]="title.invalid && title.touched">
+        </mat-form-field>
+
+        <mat-form-field class="example-form-field title">
+            <mat-label class="title">Title</mat-label>
+            <input matInput #input maxlength="50" type="text" name="title" #title="ngModel" [(ngModel)]="newPost.postTitle" required [class.invalid]="title.invalid && title.touched">
+        </mat-form-field>
+        <mat-form-field class="example-form-field">
+            <mat-label class="opis">Content (optional)</mat-label>
+            <textarea class="text-area" matInput #input maxlength="500" type="text" name="description" #description="ngModel" [(ngModel)]="newPost.postContent" required [class.invalid]="title.invalid && title.touched"></textarea>
+        </mat-form-field>
+        <!-- TODO: Link mora biti nullable -->
+        <mat-form-field class="example-form-field title" appearance="fill">
+            <mat-label class="link">Link</mat-label>
+            <input matInput #input type="text" name="link" #link="ngModel" value="https://material.angular.io/components/checkbox/examples" [(ngModel)]="newPost.link" required [class.invalid]="title.invalid && title.touched">
+        </mat-form-field>
+        <div>
+            <mat-checkbox name="isSpoiler" [(ngModel)]="newPost.isSpoiler">Is spoiler</mat-checkbox>
+        </div>
+
+
+        <div class="buttons" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+            <button mat-raised-button color="primary" class="create-button" type="submit" [disabled]="taskForm.invalid">Create</button>
+            <button mat-raised-button color="primary" class="button1" (click)="closeContainer()">Cancel</button>
+        </div>
+    </div>
+</form>
