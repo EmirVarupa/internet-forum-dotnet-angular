@@ -8,11 +8,11 @@ namespace API.Data.Services
 {
     public interface IPostService
     {
-        Task<IEnumerable<PostReadDto>> GetPostsAsync();
+        Task<IEnumerable<PostReadAllDto>> GetPostsAsync();
 
         Task AddPostAsync(PostCreateDto postCreateDto);
 
-        Task<PostReadDto> GetPostByIdAsync(int id);
+        Task<PostReadAllDto> GetPostByIdAsync(int id);
 
         Task<bool> UpdatePostByIdAsync(int id, PostUpdateDto postUpdateDto);
     }

@@ -14,6 +14,8 @@ namespace API.MappingProfiles
         {
             CreateMap<UserCreateDto, User>();
 
+            CreateMap<User, UserReadAllDto>();
+
             CreateMap<User, UserReadDto>();
 
             CreateMap<UserUpdateDto, User>();

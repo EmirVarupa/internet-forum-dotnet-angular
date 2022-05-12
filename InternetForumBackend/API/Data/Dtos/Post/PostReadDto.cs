@@ -7,6 +7,10 @@ using API.Data.Dtos.User;
 
 namespace API.Data.Dtos.Post
 {
+    /// <summary>
+    /// Since PostReadAllDto reads all properties, PostReadDto is used to read some of the properties since the rest of them are not necessary,
+    /// Will be implemented in cases like list all posts in the community where we only need the post title, community name and the user creator (username and image)
+    /// </summary>
     public class PostReadDto
     {
         public int PostId { get; set; }
@@ -17,18 +21,5 @@ namespace API.Data.Dtos.Post
 
         public string PostTitle { get; set; }
 
-        public string PostContent { get; set; }
-
-        public string? ImageUrl { get; set; }
-
-        public DateTime DateCreated { get; set; }
-
-        public int Upvotes { get; set; }
-
-        public string? Link { get; set; }
-
-        public bool IsSpoiler { get; set; }
-
-        public int ViewsCount { get; set; }
     }
 }

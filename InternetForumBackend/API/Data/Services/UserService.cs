@@ -20,11 +20,11 @@ namespace API.Data.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UserReadDto>> GetUsersAsync()
+        public async Task<IEnumerable<UserReadAllDto>> GetUsersAsync()
         {
             var result = await _repo.GetUsersAsync();
 
-            return _mapper.Map<IEnumerable<UserReadDto>>(result);
+            return _mapper.Map<IEnumerable<UserReadAllDto>>(result);
         }
 
         public async Task AddUserAsync(UserCreateDto userCreateDto)
@@ -34,11 +34,11 @@ namespace API.Data.Services
             await _repo.AddUserAsync(todo);
         }
 
-        public async Task<UserReadDto> GetUserByIdAsync(int id)
+        public async Task<UserReadAllDto> GetUserByIdAsync(int id)
         {
             var userFromRepo = await _repo.GetUserByIdAsync(id);
 
-            return _mapper.Map<UserReadDto>(userFromRepo);
+            return _mapper.Map<UserReadAllDto>(userFromRepo);
         }
 
         public async Task<bool> UpdateUserByIdAsync(int id, UserUpdateDto userUpdateDto)

@@ -14,6 +14,8 @@ namespace API.Data.Repos
 
         Task<PostComment> GetPostCommentByIdAsync(int id);
 
+        Task<IEnumerable<PostComment>> GetPostCommentByPostIdAsync(int id);
+
         Task<bool> UpdatePostCommentByIdAsync(int id, PostComment postComment);
     }
 }

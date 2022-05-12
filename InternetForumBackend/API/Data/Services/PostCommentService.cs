@@ -20,11 +20,11 @@ namespace API.Data.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PostCommentReadDto>> GetPostCommentsAsync()
+        public async Task<IEnumerable<PostCommentReadAllDto>> GetPostCommentsAsync()
         {
             var result = await _repo.GetPostCommentsAsync();
 
-            return _mapper.Map<IEnumerable<PostCommentReadDto>>(result);
+            return _mapper.Map<IEnumerable<PostCommentReadAllDto>>(result);
         }
 
         public async Task AddPostCommentAsync(PostCommentCreateDto postCommentCreateDto)
@@ -34,11 +34,18 @@ namespace API.Data.Services
             await _repo.AddPostCommentAsync(post);
         }
 
-        public async Task<PostCommentReadDto> GetPostCommentByIdAsync(int id)
+        public async Task<PostCommentReadAllDto> GetPostCommentByIdAsync(int id)
         {
             var postCommentFromRepo = await _repo.GetPostCommentByIdAsync(id);
 
-            return _mapper.Map<PostCommentReadDto>(postCommentFromRepo);
+            return _mapper.Map<PostCommentReadAllDto>(postCommentFromRepo);
+        }
+
+        public async Task<IEnumerable<PostCommentReadDto>> GetPostCommentByPostIdAsync(int id)
+        {
+            var postCommentFromRepo = await _repo.GetPostCommentByPostIdAsync(id);
+
+            return _mapper.Map<IEnumerable<PostCommentReadDto>>(postCommentFromRepo);
         }
 
         public async Task<bool> UpdatePostCommentByIdAsync(int id, PostCommentUpdateDto postCommentUpdateDto)

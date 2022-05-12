@@ -8,11 +8,11 @@ namespace API.Data.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserReadDto>> GetUsersAsync();
+        Task<IEnumerable<UserReadAllDto>> GetUsersAsync();
 
         Task AddUserAsync(UserCreateDto userCreateDto);
 
-        Task<UserReadDto> GetUserByIdAsync(int id);
+        Task<UserReadAllDto> GetUserByIdAsync(int id);
 
         Task<bool> UpdateUserByIdAsync(int id, UserUpdateDto userUpdateDto);
 

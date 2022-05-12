@@ -20,11 +20,11 @@ namespace API.Data.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<PostReadDto>> GetPostsAsync()
+        public async Task<IEnumerable<PostReadAllDto>> GetPostsAsync()
         {
             var result = await _repo.GetPostsAsync();
 
-            return _mapper.Map<IEnumerable<PostReadDto>>(result);
+            return _mapper.Map<IEnumerable<PostReadAllDto>>(result);
         }
 
         public async Task AddPostAsync(PostCreateDto postCreateDto)
@@ -34,11 +34,11 @@ namespace API.Data.Services
             await _repo.AddPostAsync(post);
         }
 
-        public async Task<PostReadDto> GetPostByIdAsync(int id)
+        public async Task<PostReadAllDto> GetPostByIdAsync(int id)
         {
             var postFromRepo = await _repo.GetPostByIdAsync(id);
 
-            return _mapper.Map<PostReadDto>(postFromRepo);
+            return _mapper.Map<PostReadAllDto>(postFromRepo);
         }
 
         public async Task<bool> UpdatePostByIdAsync(int id, PostUpdateDto postUpdateDto)

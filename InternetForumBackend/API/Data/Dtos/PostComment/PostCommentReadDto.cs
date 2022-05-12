@@ -7,6 +7,10 @@ using API.Data.Dtos.User;
 
 namespace API.Data.Dtos.PostComment
 {
+    /// <summary>
+    /// Since PostCommentReadAllDto reads all properties, PostCommentReadDto is used to read some of the properties since the rest of them are not necessary,
+    /// Will be implemented in cases like post comment creator where we only need the username and the user image
+    /// </summary>
     public class PostCommentReadDto
     {
         public int CommentId { get; set; }

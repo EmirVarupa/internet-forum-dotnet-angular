@@ -14,6 +14,8 @@ namespace API.MappingProfiles
         {
             CreateMap<PostCreateDto, Post>();
 
+            CreateMap<Post, PostReadAllDto>();
+
             CreateMap<Post, PostReadDto>();
 
             CreateMap<PostUpdateDto, Post>();

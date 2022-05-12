@@ -8,11 +8,13 @@ namespace API.Data.Services
 {
     public interface IPostCommentService
     {
-        Task<IEnumerable<PostCommentReadDto>> GetPostCommentsAsync();
+        Task<IEnumerable<PostCommentReadAllDto>> GetPostCommentsAsync();
 
         Task AddPostCommentAsync(PostCommentCreateDto postCommentCreateDto);
 
-        Task<PostCommentReadDto> GetPostCommentByIdAsync(int id);
+        Task<PostCommentReadAllDto> GetPostCommentByIdAsync(int id);
+
+        Task<IEnumerable<PostCommentReadDto>> GetPostCommentByPostIdAsync(int id);
 
         Task<bool> UpdatePostCommentByIdAsync(int id, PostCommentUpdateDto postCommentUpdateDto);
     }

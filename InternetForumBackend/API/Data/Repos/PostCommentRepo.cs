@@ -42,7 +42,25 @@ namespace API.Data.Repos
             var postCommentFromDb = await _context.PostComments
                 .Include(p => p.Post)
                 .Include(p => p.User)
-                .SingleOrDefaultAsync(p => p.CommentId == id);
+                .FirstOrDefaultAsync(p => p.CommentId == id);
+
+            return postCommentFromDb;
+        }
+
+        /// <summary>
+        /// Gets Comments for a specific post by PostId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<PostComment>> GetPostCommentByPostIdAsync(int id)
+        {
+            var postCommentFromDb =  await _context.PostComments
+                .Include(p => p.Post)
+                .Include(p => p.User)
+                /* TODO: treba skontati bez selecta u dto samo staviti da ne uzima nebitne stvari */
+               /* .Select(x => new { x.PostId, x.UserId, x.User.Username })*/
+                .Where(p => p.PostId == id)
+                .ToListAsync();
 
             return postCommentFromDb;
         }

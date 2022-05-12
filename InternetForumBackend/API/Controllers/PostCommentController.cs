@@ -37,6 +37,15 @@ namespace API.Controllers
             return Ok(tag);
         }
 
+        [HttpGet("Post/{id}")]
+        public async Task<IActionResult> GetPostCommentByPostIdAsync(int id)
+        {
+            var result = await _service.GetPostCommentByPostIdAsync(id);
+            if (result == null) return NotFound();
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddPostCommentAsync([FromBody] PostCommentCreateDto postCommentCreateDto)
         {
