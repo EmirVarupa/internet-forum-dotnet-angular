@@ -7,54 +7,53 @@ using API.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class CommunityTypeController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CommunityTypeController : ControllerBase
+    private readonly ICommunityTypeService _service;
+
+    public CommunityTypeController(ICommunityTypeService service)
     {
-        private readonly ICommunityTypeService _service;
+        _service = service;
+    }
 
-        public CommunityTypeController(ICommunityTypeService service)
-        {
-            _service = service;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetCommunityTypeAsync()
+    {
+        var result = await _service.GetCommunityTypeAsync();
 
-        [HttpGet]
-        public async Task<IActionResult> GetCommunityTypeAsync()
-        {
-            var result = await _service.GetCommunityTypeAsync();
+        return Ok(result);
+    }
 
-            return Ok(result);
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCommunityTypeByIdAsync(int id)
+    {
+        var userStatus = await _service.GetCommunityTypeByIdAsync(id);
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCommunityTypeByIdAsync(int id)
-        {
-            var userStatus = await _service.GetCommunityTypeByIdAsync(id);
+        if (userStatus == null) return NotFound();
 
-            if (userStatus == null) return NotFound();
+        return Ok(userStatus);
+    }
 
-            return Ok(userStatus);
-        }
+    [HttpPost]
+    public async Task<IActionResult> AddCommunityTypeAsync([FromBody] CommunityTypeCreateDto communityTypeCreateDto)
+    {
+        await _service.AddCommunityTypeAsync(communityTypeCreateDto);
 
-        [HttpPost]
-        public async Task<IActionResult> AddCommunityTypeAsync([FromBody] CommunityTypeCreateDto communityTypeCreateDto)
-        {
-            await _service.AddCommunityTypeAsync(communityTypeCreateDto);
+        return StatusCode(201);
+    }
 
-            return StatusCode(201);
-        }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCommunityTypeAsync(int id,
+        [FromBody] CommunityTypeUpdateDto communityTypeUpdateDto)
+    {
+        var result = await _service.UpdateCommunityTypeAsync(id, communityTypeUpdateDto);
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCommunityTypeAsync(int id,
-            [FromBody] CommunityTypeUpdateDto communityTypeUpdateDto)
-        {
-            var result = await _service.UpdateCommunityTypeAsync(id, communityTypeUpdateDto);
+        if (!result) return BadRequest("Update failed!");
 
-            if (!result) return BadRequest("Update failed!");
-
-            return NoContent();
-        }
+        return NoContent();
     }
 }

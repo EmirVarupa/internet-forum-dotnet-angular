@@ -4,10 +4,9 @@ using System.Linq;
 using System.Security.AccessControl;
 using System.Threading.Tasks;
 
-namespace API.Data.Dtos.UserStatus
+namespace API.Data.Dtos.UserStatus;
+
+public class UserStatusCreateDto
 {
-    public class UserStatusCreateDto
-    {
-        public string StatusName { get; set; }
-    }
+    public string StatusName { get; set; }
 }

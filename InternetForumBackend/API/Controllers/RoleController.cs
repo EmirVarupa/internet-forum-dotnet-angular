@@ -7,54 +7,53 @@ using API.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class RoleController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RoleController : ControllerBase
+    private readonly IRoleService _service;
+
+    public RoleController(IRoleService service)
     {
-        private readonly IRoleService _service;
+        _service = service;
+    }
 
-        public RoleController(IRoleService service)
-        {
-            _service = service;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetRoleAsync()
+    {
+        var result = await _service.GetRoleAsync();
 
-        [HttpGet]
-        public async Task<IActionResult> GetRoleAsync()
-        {
-            var result = await _service.GetRoleAsync();
+        return Ok(result);
+    }
 
-            return Ok(result);
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetRoleByIdAsync(int id)
+    {
+        var userStatus = await _service.GetRoleByIdAsync(id);
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetRoleByIdAsync(int id)
-        {
-            var userStatus = await _service.GetRoleByIdAsync(id);
+        if (userStatus == null) return NotFound();
 
-            if (userStatus == null) return NotFound();
+        return Ok(userStatus);
+    }
 
-            return Ok(userStatus);
-        }
+    [HttpPost]
+    public async Task<IActionResult> AddRoleAsync([FromBody] RoleCreateDto roleCreateDto)
+    {
+        await _service.AddRoleAsync(roleCreateDto);
 
-        [HttpPost]
-        public async Task<IActionResult> AddRoleAsync([FromBody] RoleCreateDto roleCreateDto)
-        {
-            await _service.AddRoleAsync(roleCreateDto);
+        return StatusCode(201);
+    }
 
-            return StatusCode(201);
-        }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateRoleAsync(int id,
+        [FromBody] RoleUpdateDto roleUpdateDto)
+    {
+        var result = await _service.UpdateRoleAsync(id, roleUpdateDto);
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateRoleAsync(int id,
-            [FromBody] RoleUpdateDto roleUpdateDto)
-        {
-            var result = await _service.UpdateRoleAsync(id, roleUpdateDto);
+        if (!result) return BadRequest("Update failed!");
 
-            if (!result) return BadRequest("Update failed!");
-
-            return NoContent();
-        }
+        return NoContent();
     }
 }

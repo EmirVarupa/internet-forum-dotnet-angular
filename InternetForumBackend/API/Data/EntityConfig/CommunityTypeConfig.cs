@@ -6,17 +6,16 @@ using API.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace API.Data.EntityConfig
-{
-    public class CommunityTypeConfig : IEntityTypeConfiguration<CommunityType>
-    {
-        public void Configure(EntityTypeBuilder<CommunityType> builder)
-        {
-            builder.HasKey(ct => ct.TypeId);
+namespace API.Data.EntityConfig;
 
-            builder.Property(ct => ct.TypeName)
-                .IsRequired()
-                .HasMaxLength(50);
-        }
+public class CommunityTypeConfig : IEntityTypeConfiguration<CommunityType>
+{
+    public void Configure(EntityTypeBuilder<CommunityType> builder)
+    {
+        builder.HasKey(ct => ct.TypeId);
+
+        builder.Property(ct => ct.TypeName)
+            .IsRequired()
+            .HasMaxLength(50);
     }
 }

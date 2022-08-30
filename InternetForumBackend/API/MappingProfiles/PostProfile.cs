@@ -6,19 +6,18 @@ using API.Data.Dtos.Post;
 using API.Data.Models;
 using AutoMapper;
 
-namespace API.MappingProfiles
+namespace API.MappingProfiles;
+
+public class PostProfile : Profile
 {
-    public class PostProfile : Profile
+    public PostProfile()
     {
-        public PostProfile()
-        {
-            CreateMap<PostCreateDto, Post>();
+        CreateMap<PostCreateDto, Post>();
 
-            CreateMap<Post, PostReadAllDto>();
+        CreateMap<Post, PostReadAllDto>();
 
-            CreateMap<Post, PostReadDto>();
+        CreateMap<Post, PostReadDto>();
 
-            CreateMap<PostUpdateDto, Post>();
-        }
+        CreateMap<PostUpdateDto, Post>();
     }
 }

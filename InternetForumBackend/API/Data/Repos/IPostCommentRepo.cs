@@ -4,18 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data.Models;
 
-namespace API.Data.Repos
+namespace API.Data.Repos;
+
+public interface IPostCommentRepo
 {
-    public interface IPostCommentRepo
-    {
-        Task<IEnumerable<PostComment>> GetPostCommentsAsync();
+    Task<IEnumerable<PostComment>> GetPostCommentsAsync();
 
-        Task AddPostCommentAsync(PostComment postComment);
+    Task AddPostCommentAsync(PostComment postComment);
 
-        Task<PostComment> GetPostCommentByIdAsync(int id);
+    Task<PostComment> GetPostCommentByIdAsync(int id);
 
-        Task<IEnumerable<PostComment>> GetPostCommentByPostIdAsync(int id);
+    Task<IEnumerable<PostComment>> GetPostCommentByPostIdAsync(int postId, int? userId);
 
-        Task<bool> UpdatePostCommentByIdAsync(int id, PostComment postComment);
-    }
+    Task<bool> UpdatePostCommentByIdAsync(int id, PostComment postComment);
+
+    Task<bool> DeletePostCommentByIdAsync(int id);
 }

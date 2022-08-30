@@ -6,17 +6,16 @@ using API.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace API.Data.EntityConfig
-{
-    public class UserStatusConfig : IEntityTypeConfiguration<UserStatus>
-    {
-        public void Configure(EntityTypeBuilder<UserStatus> builder)
-        {
-            builder.HasKey(usc => usc.StatusId);
+namespace API.Data.EntityConfig;
 
-            builder.Property(usc => usc.StatusName)
-                .IsRequired()
-                .HasMaxLength(50);
-        }
+public class UserStatusConfig : IEntityTypeConfiguration<UserStatus>
+{
+    public void Configure(EntityTypeBuilder<UserStatus> builder)
+    {
+        builder.HasKey(usc => usc.StatusId);
+
+        builder.Property(usc => usc.StatusName)
+            .IsRequired()
+            .HasMaxLength(50);
     }
 }

@@ -4,16 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data.Models;
 
-namespace API.Data.Repos
+namespace API.Data.Repos;
+
+public interface IRoleRepo
 {
-    public interface IRoleRepo
-    {
-        Task<IEnumerable<Role>> GetRoleAsync();
+    Task<IEnumerable<Role>> GetRoleAsync();
 
-        Task<Role> GetRoleByIdAsync(int id);
+    Task<Role> GetRoleByIdAsync(int id);
 
-        Task AddRoleAsync(Role role);
+    Task AddRoleAsync(Role role);
 
-        Task<bool> UpdateRoleAsync(int id, Role role);
-    }
+    Task<bool> UpdateRoleAsync(int id, Role role);
 }

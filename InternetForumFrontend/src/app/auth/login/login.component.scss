@@ -1,0 +1,10 @@
+@import "/src/styles.scss";
+.dot {
+    font-size: 36px;
+}
+
+.create-account:hover {
+    cursor: pointer;
+    color: $primary-light;
+    transition: 0.4s;
+}

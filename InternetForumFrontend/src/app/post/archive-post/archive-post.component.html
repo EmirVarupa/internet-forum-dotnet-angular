@@ -1,0 +1,10 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit(data)" #taskForm="ngForm">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <h2>Do you want to archive the post?</h2>
+
+        <div class="buttons" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+            <button mat-raised-button color="primary" class="create-button" type="submit" [disabled]="taskForm.invalid">Yes</button>
+            <button mat-button class="button1" mat-dialog-close>No</button>
+        </div>
+    </div>
+</form>

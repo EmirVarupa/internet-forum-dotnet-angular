@@ -7,45 +7,49 @@ using API.Data.Models;
 using API.Data.Repos;
 using AutoMapper;
 
-namespace API.Data.Services
+namespace API.Data.Services;
+
+public class CommunityService : ICommunityService
 {
-    public class CommunityService : ICommunityService
+    private readonly ICommunityRepo _repo;
+    private readonly IMapper _mapper;
+
+    public CommunityService(ICommunityRepo repo, IMapper mapper)
     {
-        private readonly ICommunityRepo _repo;
-        private readonly IMapper _mapper;
+        _repo = repo;
+        _mapper = mapper;
+    }
 
-        public CommunityService(ICommunityRepo repo, IMapper mapper)
-        {
-            _repo = repo;
-            _mapper = mapper;
-        }
+    public async Task<IEnumerable<CommunityReadDto>> GetCommunitiesAsync()
+    {
+        var result = await _repo.GetCommunitiesAsync();
 
-        public async Task<IEnumerable<CommunityReadDto>> GetCommunitiesAsync()
-        {
-            var result = await _repo.GetCommunitiesAsync();
+        return _mapper.Map<IEnumerable<CommunityReadDto>>(result);
+    }
 
-            return _mapper.Map<IEnumerable<CommunityReadDto>>(result);
-        }
+    public async Task AddCommunityAsync(CommunityCreateDto communityCreateDto)
+    {
+        var todo = _mapper.Map<Community>(communityCreateDto);
 
-        public async Task AddCommunityAsync(CommunityCreateDto communityCreateDto)
-        {
-            var todo = _mapper.Map<Community>(communityCreateDto);
+        await _repo.AddCommunityAsync(todo);
+    }
 
-            await _repo.AddCommunityAsync(todo);
-        }
+    public async Task<CommunityReadDto> GetCommunityByIdAsync(int id)
+    {
+        var communityFromRepo = await _repo.GetCommunityByIdAsync(id);
 
-        public async Task<CommunityReadDto> GetCommunityByIdAsync(int id)
-        {
-            var communityFromRepo = await _repo.GetCommunityByIdAsync(id);
+        return _mapper.Map<CommunityReadDto>(communityFromRepo);
+    }
 
-            return _mapper.Map<CommunityReadDto>(communityFromRepo);
-        }
+    public async Task<bool> UpdateCommunityByIdAsync(int id, CommunityUpdateDto communityUpdateDto)
+    {
+        var community = _mapper.Map<Community>(communityUpdateDto);
 
-        public async Task<bool> UpdateCommunityByIdAsync(int id, CommunityUpdateDto communityUpdateDto)
-        {
-            var community = _mapper.Map<Community>(communityUpdateDto);
+        return await _repo.UpdateCommunityByIdAsync(id, community);
+    }
 
-            return await _repo.UpdateCommunityByIdAsync(id, community);
-        }
+    public async Task<bool> ArchiveCommunityByIdAsync(int id)
+    {
+        return await _repo.ArchiveCommunityByIdAsync(id);
     }
 }

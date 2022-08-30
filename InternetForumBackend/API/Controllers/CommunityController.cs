@@ -7,52 +7,61 @@ using API.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class CommunityController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CommunityController : ControllerBase
+    private readonly ICommunityService _service;
+
+    public CommunityController(ICommunityService service)
     {
-        private readonly ICommunityService _service;
+        _service = service;
+    }
 
-        public CommunityController(ICommunityService service)
-        {
-            _service = service;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetCommunityAsync()
+    {
+        var result = await _service.GetCommunitiesAsync();
 
-        [HttpGet]
-        public async Task<IActionResult> GetCommunityAsync()
-        {
-            var result = await _service.GetCommunitiesAsync();
+        return Ok(result);
+    }
 
-            return Ok(result);
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCommunityByIdAsync(int id)
+    {
+        var tag = await _service.GetCommunityByIdAsync(id);
+        if (tag == null) return NotFound();
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCommunityByIdAsync(int id)
-        {
-            var tag = await _service.GetCommunityByIdAsync(id);
-            if (tag == null) return NotFound();
+        return Ok(tag);
+    }
 
-            return Ok(tag);
-        }
+    [HttpPost]
+    public async Task<IActionResult> AddCommunityAsync([FromBody] CommunityCreateDto communityCreateDto)
+    {
+        await _service.AddCommunityAsync(communityCreateDto);
 
-        [HttpPost]
-        public async Task<IActionResult> AddCommunityAsync([FromBody] CommunityCreateDto communityCreateDto)
-        {
-            await _service.AddCommunityAsync(communityCreateDto);
+        return StatusCode(201);
+    }
 
-            return StatusCode(201);
-        }
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCommunityAsync(int id, [FromBody] CommunityUpdateDto communityUpdateDto)
+    {
+        var result = await _service.UpdateCommunityByIdAsync(id, communityUpdateDto);
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCommunityAsync(int id, [FromBody] CommunityUpdateDto communityUpdateDto)
-        {
-            var result = await _service.UpdateCommunityByIdAsync(id, communityUpdateDto);
+        if (!result) return BadRequest("Update failed!");
 
-            if (!result) return BadRequest("Update failed!");
+        return NoContent();
+    }
 
-            return NoContent();
-        }
+    [HttpPut("Archive/{communityId}")]
+    public async Task<IActionResult> ArchiveCommunityAsync(int communityId)
+    {
+        var result = await _service.ArchiveCommunityByIdAsync(communityId);
+
+        if (!result) return BadRequest("Archive failed!");
+
+        return NoContent();
     }
 }

@@ -4,10 +4,10 @@ import { UserRole } from "./UserRole"
 export class User{
     // NOTE: THIS IS THE REAL USER
     userId!: number;
-    userStatusId?: number;
+    statusId?: number;
     userStatus!: UserStatus;
-    userRoleId?: number;
-    userRole!: UserRole;
+    roleId?: number;
+    role!: UserRole;
     username!: string;
     password!: string;
     firstName!: string;
@@ -15,6 +15,7 @@ export class User{
     email!: string;
     dateCreated!: Date;
     imageUrl!: string;
+    isArchived?: boolean;
 
 
     // NOTE: Temporary user for auth.service login

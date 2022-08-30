@@ -2,19 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Data.Dtos.Auth;
 using API.Data.Dtos.User;
+using API.Data.Models;
 
-namespace API.Data.Services
+namespace API.Data.Services;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-        Task<IEnumerable<UserReadAllDto>> GetUsersAsync();
+    string GetMyName();
+    Task<IEnumerable<UserReadAllDto>> GetUsersAsync();
 
-        Task AddUserAsync(UserCreateDto userCreateDto);
+    Task<UserDto> RegisterUserAsync(UserDto userDto);
 
-        Task<UserReadAllDto> GetUserByIdAsync(int id);
+    Task<AuthResponseDto> LoginUserAsync(UserLoginDto userLoginDto);
 
-        Task<bool> UpdateUserByIdAsync(int id, UserUpdateDto userUpdateDto);
+    Task<UserReadAllDto> GetUserByUsernameAsync(string username);
 
-    }
+    Task<UserReadAllDto> GetUserByUserIdAsync(int userId);
+
+    Task<bool> UpdateUserByIdAsync(int id, UserUpdateDto userUpdateDto);
+
+    Task<AuthResponseDto> RefreshTokenAsync(string refreshToken);
+    Task<IEnumerable<UserReadAllDto>> GetUsersFromCommunityAsync(int communityId);
+
+    Task<bool> ArchiveUserByIdAsync(int id);
 }

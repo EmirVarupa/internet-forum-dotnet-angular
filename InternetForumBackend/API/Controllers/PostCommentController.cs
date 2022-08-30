@@ -7,61 +7,80 @@ using API.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class PostCommentController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PostCommentController : ControllerBase
+    private readonly IPostCommentService _service;
+
+    public PostCommentController(IPostCommentService service)
     {
-        private readonly IPostCommentService _service;
+        _service = service;
+    }
 
-        public PostCommentController(IPostCommentService service)
-        {
-            _service = service;
-        }
+    [HttpGet]
+    public async Task<IActionResult> GetPostCommentAsync()
+    {
+        var result = await _service.GetPostCommentsAsync();
 
-        [HttpGet]
-        public async Task<IActionResult> GetPostCommentAsync()
-        {
-            var result = await _service.GetPostCommentsAsync();
+        return Ok(result);
+    }
 
-            return Ok(result);
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPostCommentByIdAsync(int id)
+    {
+        var tag = await _service.GetPostCommentByIdAsync(id);
+        if (tag == null) return NotFound();
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPostCommentByIdAsync(int id)
-        {
-            var tag = await _service.GetPostCommentByIdAsync(id);
-            if (tag == null) return NotFound();
+        return Ok(tag);
+    }
 
-            return Ok(tag);
-        }
+    [HttpGet("Post/{postId}")]
+    public async Task<IActionResult> GetPostCommentByPostIdAsync(int postId, int? userId)
+    {
+        var result = await _service.GetPostCommentByPostIdAsync(postId, userId);
+        if (!result.Any()) return NotFound();
 
-        [HttpGet("Post/{id}")]
-        public async Task<IActionResult> GetPostCommentByPostIdAsync(int id)
-        {
-            var result = await _service.GetPostCommentByPostIdAsync(id);
-            if (result == null) return NotFound();
+        return Ok(result);
+    }
 
-            return Ok(result);
-        }
+    [HttpGet("Post/{postId}/{userId}")]
+    public async Task<IActionResult> GetPostByCommunityIdAsync(int postId, int? userId)
+    {
+        var result = await _service.GetPostCommentByPostIdAsync(postId, userId);
+        if (result == null) return NotFound();
 
-        [HttpPost]
-        public async Task<IActionResult> AddPostCommentAsync([FromBody] PostCommentCreateDto postCommentCreateDto)
-        {
-            await _service.AddPostCommentAsync(postCommentCreateDto);
+        return Ok(result);
+    }
 
-            return StatusCode(201);
-        }
+    [HttpPost]
+    public async Task<IActionResult> AddPostCommentAsync([FromBody] PostCommentCreateDto postCommentCreateDto)
+    {
+        await _service.AddPostCommentAsync(postCommentCreateDto);
 
-        [HttpPut]
-        public async Task<IActionResult> UpdatePostCommentAsync(int id, [FromBody] PostCommentUpdateDto postCommentUpdateDto)
-        {
-            var result = await _service.UpdatePostCommentByIdAsync(id, postCommentUpdateDto);
+        return StatusCode(201);
+    }
 
-            if (!result) return BadRequest("Update failed!");
+    [HttpPut]
+    public async Task<IActionResult> UpdatePostCommentAsync(int id,
+        [FromBody] PostCommentUpdateDto postCommentUpdateDto)
+    {
+        var result = await _service.UpdatePostCommentByIdAsync(id, postCommentUpdateDto);
 
-            return NoContent();
-        }
+        if (!result) return BadRequest("Update failed!");
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeletePostCommentAsync(int id)
+    {
+        var result = await _service.DeletePostCommentByIdAsync(id);
+
+        if (!result) return BadRequest("Delete failed!");
+
+        return NoContent();
     }
 }

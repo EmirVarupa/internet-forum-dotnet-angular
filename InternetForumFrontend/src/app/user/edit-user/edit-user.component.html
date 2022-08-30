@@ -1,0 +1,63 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit(data)" #taskForm="ngForm">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+
+        <!-- <mat-form-field class="example-form-field title">
+            <mat-label class="title">User ID: {{data.userId}}</mat-label>
+            <input matInput #input maxlength="50" type="text" name="userId" #userId="ngModel" [(ngModel)]="editUser.userId" required [class.invalid]="userId.invalid && userId.touched">
+        </mat-form-field> -->
+
+        <h1 *ngIf="data">{{data.username}}</h1>
+        <p *ngIf="data">User ID: {{data.userId}}</p>
+
+        <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput type="text" name="firstName" #firstName="ngModel" [(ngModel)]="data.firstName" required [class.invalid]="firstName.invalid && firstName.touched">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" name="lastName" #lastName="ngModel" [(ngModel)]="data.lastName" required [class.invalid]="lastName.invalid && lastName.touched">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput type="text" name="username" #username="ngModel" [(ngModel)]="data.username" required [class.invalid]="username.invalid && username.touched">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="text" placeholder="emir.varupa2018@size.ba" name="email" #email="ngModel" [(ngModel)]="data.email" required [class.invalid]="email.invalid && email.touched">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>New password</mat-label>
+            <input matInput maxlength="50" type="password" value="********" name="text" #password="ngModel" [(ngModel)]="data.password" required [class.invalid]="password.invalid && password.touched">
+        </mat-form-field>
+
+        <!-- <mat-form-field>
+            <mat-label>Role</mat-label>
+            <input matInput #input maxlength="50" type="text" name="role" #roleName="ngModel" [(ngModel)]="editUser.userRole.roleName" required [class.invalid]="roleName.invalid && roleName.touched">
+        </mat-form-field> -->
+
+        <mat-form-field>
+            <mat-label>Role</mat-label>
+            <mat-select class="select" name="role" #role="ngModel" [(ngModel)]="data.role" required [class.invalid]="role.invalid && role.touched">
+                <mat-option *ngFor="let role of roles" [value]="role.roleId">
+                    {{role.roleName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select class="select" name="role" #role="ngModel" [(ngModel)]="data.userStatus.statusId" required [class.invalid]="role.invalid && role.touched">
+                <mat-option *ngFor="let userStatus of userStatuses" [value]="userStatus.statusId">
+                    {{userStatus.statusName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="buttons" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+            <button mat-flat-button color="primary" class="create-button" type="submit" [disabled]="taskForm.invalid">Edit</button>
+            <button mat-button class="button1" mat-dialog-close>Cancel</button>
+        </div>

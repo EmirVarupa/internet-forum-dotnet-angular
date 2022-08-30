@@ -4,16 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data.Models;
 
-namespace API.Data.Repos
+namespace API.Data.Repos;
+
+public interface ITagRepo
 {
-    public interface ITagRepo
-    {
-        Task<IEnumerable<Tag>> GetTagAsync();
+    Task<IEnumerable<Tag>> GetTagAsync();
 
-        Task<Tag> GetTagByIdAsync(int id);
+    Task<Tag> GetTagByIdAsync(int id);
 
-        Task AddTagAsync(Tag tag);
+    Task AddTagAsync(Tag tag);
 
-        Task<bool> UpdateTagAsync(int id, Tag tag);
-    }
+    Task<bool> UpdateTagAsync(int id, Tag tag);
 }

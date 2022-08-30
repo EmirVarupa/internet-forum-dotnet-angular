@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using API.Data.Dtos.CommunityType;
 using API.Data.Models;
 
-namespace API.Data.Services
+namespace API.Data.Services;
+
+public interface ICommunityTypeService
 {
-    public interface ICommunityTypeService
-    {
-        Task<IEnumerable<CommunityType>> GetCommunityTypeAsync();
+    Task<IEnumerable<CommunityType>> GetCommunityTypeAsync();
 
-        Task<CommunityTypeReadDto> GetCommunityTypeByIdAsync(int id);
+    Task<CommunityTypeReadDto> GetCommunityTypeByIdAsync(int id);
 
-        Task AddCommunityTypeAsync(CommunityTypeCreateDto communityTypeCreateDto);
+    Task AddCommunityTypeAsync(CommunityTypeCreateDto communityTypeCreateDto);
 
-        Task<bool> UpdateCommunityTypeAsync(int id, CommunityTypeUpdateDto communityTypeUpdateDto);
-    }
+    Task<bool> UpdateCommunityTypeAsync(int id, CommunityTypeUpdateDto communityTypeUpdateDto);
 }

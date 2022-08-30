@@ -6,17 +6,16 @@ using API.Data.Dtos.Roles;
 using API.Data.Models;
 using AutoMapper;
 
-namespace API.MappingProfiles
+namespace API.MappingProfiles;
+
+public class RoleProfile : Profile
 {
-    public class RoleProfile : Profile
+    public RoleProfile()
     {
-        public RoleProfile()
-        {
-            CreateMap<RoleCreateDto, Role>();
+        CreateMap<RoleCreateDto, Role>();
 
-            CreateMap<Role, RoleReadDto>();
+        CreateMap<Role, RoleReadDto>();
 
-            CreateMap<RoleUpdateDto, Role>();
-        }
+        CreateMap<RoleUpdateDto, Role>();
     }
 }

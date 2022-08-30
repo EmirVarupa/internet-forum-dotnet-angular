@@ -6,19 +6,18 @@ using API.Data.Dtos.PostComment;
 using API.Data.Models;
 using AutoMapper;
 
-namespace API.MappingProfiles
+namespace API.MappingProfiles;
+
+public class PostCommentProfile : Profile
 {
-    public class PostCommentProfile : Profile
+    public PostCommentProfile()
     {
-        public PostCommentProfile()
-        {
-            CreateMap<PostCommentCreateDto, PostComment>();
+        CreateMap<PostCommentCreateDto, PostComment>();
 
-            CreateMap<PostComment, PostCommentReadAllDto>();
+        CreateMap<PostComment, PostCommentReadAllDto>();
 
-            CreateMap<PostComment, PostCommentReadDto>();
+        CreateMap<PostComment, PostCommentReadDto>();
 
-            CreateMap<PostCommentUpdateDto, PostComment>();
-        }
+        CreateMap<PostCommentUpdateDto, PostComment>();
     }
 }

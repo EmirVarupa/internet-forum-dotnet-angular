@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Data.Dtos.Roles
+namespace API.Data.Dtos.Roles;
+
+public class RoleCreateDto
 {
-    public class RoleCreateDto
-    {
-        public string RoleName { get; set; }
-    }
+    public string RoleName { get; set; }
 }

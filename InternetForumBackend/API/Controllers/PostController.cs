@@ -7,52 +7,97 @@ using API.Data.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace API.Controllers
+namespace API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class PostController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PostController : ControllerBase
+    private readonly IPostService _service;
+
+    public PostController(IPostService service)
     {
-        private readonly IPostService _service;
+        _service = service;
+    }
 
-        public PostController(IPostService service)
-        {
-            _service = service;
-        }
+    [HttpGet("Community")]
+    public async Task<IActionResult> GetPostAsync()
+    {
+        var result = await _service.GetPostsAsync();
 
-        [HttpGet]
-        public async Task<IActionResult> GetPostAsync()
-        {
-            var result = await _service.GetPostsAsync();
+        return Ok(result);
+    }
 
-            return Ok(result);
-        }
+    [HttpGet("User/{username}")]
+    public async Task<IActionResult> GetUsersPostsByUsernameAsync(string username)
+    {
+        var result = await _service.GetUsersPostsByUsernameAsync(username);
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetPostByIdAsync(int id)
-        {
-            var tag = await _service.GetPostByIdAsync(id);
-            if (tag == null) return NotFound();
+        return Ok(result);
+    }
 
-            return Ok(tag);
-        }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetPostByIdAsync(int id)
+    {
+        var tag = await _service.GetPostByIdAsync(id);
+        if (tag == null) return NotFound();
 
-        [HttpPost]
-        public async Task<IActionResult> AddPostAsync([FromBody] PostCreateDto postCreateDto)
-        {
-            await _service.AddPostAsync(postCreateDto);
+        return Ok(tag);
+    }
 
-            return StatusCode(201);
-        }
+    [HttpGet("Community/{communityId}")]
+    public async Task<IActionResult> GetPostByCommunityIdAsync(int communityId, int userId)
+    {
+        var result = await _service.GetPostByCommunityIdAsync(communityId, userId);
+        if (result == null) return NotFound();
 
-        [HttpPut]
-        public async Task<IActionResult> UpdatePostAsync(int id, [FromBody] PostUpdateDto postUpdateDto)
-        {
-            var result = await _service.UpdatePostByIdAsync(id, postUpdateDto);
+        return Ok(result);
+    }
 
-            if (!result) return BadRequest("Update failed!");
+    [HttpGet("Community/{communityId}/{userId}")]
+    public async Task<IActionResult> GetPostByCommunityIdAsync(int communityId, int? userId)
+    {
+        var result = await _service.GetPostByCommunityIdAsync(communityId, userId);
+        if (result == null) return NotFound();
 
-            return NoContent();
-        }
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddPostAsync([FromBody] PostCreateDto postCreateDto)
+    {
+        await _service.AddPostAsync(postCreateDto);
+
+        return StatusCode(201);
+    }
+
+    [HttpPut("{postId}")]
+    public async Task<IActionResult> UpdatePostAsync(int postId, [FromBody] PostUpdateDto postUpdateDto)
+    {
+        var result = await _service.UpdatePostByIdAsync(postId, postUpdateDto);
+
+        if (!result) return BadRequest("Update failed!");
+
+        return NoContent();
+    }
+
+    [HttpPut("View/{id}")]
+    public async Task<IActionResult> ViewPostAsync(int id)
+    {
+        var result = await _service.ViewPostAsync(id);
+
+        if (!result) return BadRequest("Update failed!");
+
+        return NoContent();
+    }
+
+    [HttpPut("Archive/{postId}")]
+    public async Task<IActionResult> ArchivePostAsync(int postId)
+    {
+        var result = await _service.ArchivePostByIdAsync(postId);
+
+        if (!result) return BadRequest("Archive failed!");
+
+        return NoContent();
     }
 }

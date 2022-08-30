@@ -6,4 +6,5 @@ export class Community{
     communityType!: CommunityType;
     communityName!: string;
     communitySummary!: string;
+    isArchived?: boolean;
 }

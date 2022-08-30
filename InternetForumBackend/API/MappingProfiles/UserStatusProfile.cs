@@ -6,17 +6,16 @@ using API.Data.Dtos.UserStatus;
 using API.Data.Models;
 using AutoMapper;
 
-namespace API.MappingProfiles
+namespace API.MappingProfiles;
+
+public class UserStatusProfile : Profile
 {
-    public class UserStatusProfile : Profile
+    public UserStatusProfile()
     {
-        public UserStatusProfile()
-        {
-            CreateMap<UserStatusCreateDto, UserStatus>();
+        CreateMap<UserStatusCreateDto, UserStatus>();
 
-            CreateMap<UserStatus, UserStatusReadDto>();
+        CreateMap<UserStatus, UserStatusReadDto>();
 
-            CreateMap<UserStatusUpdateDto, UserStatus>();
-        }
+        CreateMap<UserStatusUpdateDto, UserStatus>();
     }
 }

@@ -4,17 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Data.Dtos.Community
+namespace API.Data.Dtos.Community;
+
+public class CommunityCreateDto
 {
-    public class CommunityCreateDto
-    {
-        [Required]
-        public int CommunityTypeId { get; set; }
+    [Required]
+    public int CommunityTypeId { get; set; }
 
-        [Required]
-        public string CommunityName { get; set; }
+    [Required]
+    public string CommunityName { get; set; }
 
-        [Required]
-        public string CommunitySummary { get; set; }
-    }
+    [Required]
+    public string CommunitySummary { get; set; }
 }

@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using API.Data.Dtos.UserStatus;
 using API.Data.Models;
 
-namespace API.Data.Services
+namespace API.Data.Services;
+
+public interface IUserStatusService
 {
-    public interface IUserStatusService
-    {
-        Task<IEnumerable<UserStatus>> GetUserStatusAsync();
+    Task<IEnumerable<UserStatus>> GetUserStatusAsync();
 
-        Task<UserStatusReadDto> GetUserStatusByIdAsync(int id);
+    Task<UserStatusReadDto> GetUserStatusByIdAsync(int id);
 
-        Task AddUserStatusAsync(UserStatusCreateDto userStatusCreateDto);
+    Task AddUserStatusAsync(UserStatusCreateDto userStatusCreateDto);
 
-        Task<bool> UpdateUserStatusAsync(int id, UserStatusUpdateDto userStatusUpdateDto);
-    }
+    Task<bool> UpdateUserStatusAsync(int id, UserStatusUpdateDto userStatusUpdateDto);
 }

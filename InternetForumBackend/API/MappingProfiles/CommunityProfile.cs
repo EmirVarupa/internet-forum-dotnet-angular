@@ -6,17 +6,16 @@ using API.Data.Dtos.Community;
 using API.Data.Models;
 using AutoMapper;
 
-namespace API.MappingProfiles
+namespace API.MappingProfiles;
+
+public class CommunityProfile : Profile
 {
-    public class CommunityProfile : Profile
+    public CommunityProfile()
     {
-        public CommunityProfile()
-        {
-            CreateMap<CommunityCreateDto, Community>();
+        CreateMap<CommunityCreateDto, Community>();
 
-            CreateMap<Community, CommunityReadDto>();
+        CreateMap<Community, CommunityReadDto>();
 
-            CreateMap<CommunityUpdateDto, Community>();
-        }
+        CreateMap<CommunityUpdateDto, Community>();
     }
 }

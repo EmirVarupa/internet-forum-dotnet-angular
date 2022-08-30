@@ -1,0 +1,21 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <h1>Welcome back<span class="custom-theme-primary-1 dot">.</span></h1>
+            <p>Don't have an account? <span><a class="custom-theme-primary-1 create-account" (click)="register()">Create account</a></span></p>
+        </div>
+        <mat-form-field class="example-form-field Username" appearance="fill">
+            <mat-label class="Username">Username</mat-label>
+            <input matInput #input maxlength="50" type="text" name="username" #username="ngModel" ngModel required [class.invalid]="username.invalid && username.touched">
+        </mat-form-field>
+        <mat-form-field class="example-form-field Password" appearance="fill">
+            <mat-label class="Password">Password</mat-label>
+            <input matInput #input maxlength="50" type="password" name="password" #password="ngModel" ngModel required [class.invalid]="password.invalid && password.touched">
+        </mat-form-field>
+
+        <div class="buttons" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+            <button mat-raised-button color="primary" class="create-button" type="submit" [disabled]="loginForm.invalid">Login</button>
+            <button mat-button class="button1" mat-dialog-close>Cancel</button>
+        </div>
+    </div>
+</form>

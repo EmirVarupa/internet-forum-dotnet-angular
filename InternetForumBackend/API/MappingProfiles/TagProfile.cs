@@ -6,17 +6,16 @@ using API.Data.Dtos.Tag;
 using API.Data.Models;
 using AutoMapper;
 
-namespace API.MappingProfiles
+namespace API.MappingProfiles;
+
+public class TagProfile : Profile
 {
-    public class TagProfile : Profile
+    public TagProfile()
     {
-        public TagProfile()
-        {
-            CreateMap<TagCreateDto, Tag>();
+        CreateMap<TagCreateDto, Tag>();
 
-            CreateMap<Tag, TagReadDto>();
+        CreateMap<Tag, TagReadDto>();
 
-            CreateMap<TagUpdateDto, Tag>();
-        }
+        CreateMap<TagUpdateDto, Tag>();
     }
 }

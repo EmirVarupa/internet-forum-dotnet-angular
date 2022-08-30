@@ -1,0 +1,53 @@
+<form novalidate autocomplete="off" (ngSubmit)="onSubmit()" #registerForm="ngForm">
+    <div fxLayout="column" fxLayoutAlign="center stretch">
+        <div fxLayout="column" fxLayoutAlign="center center">
+            <h1>Sign Up<span class="custom-theme-primary-1">.</span></h1>
+            <p>Already a member? <span><a class="custom-theme-primary-1 login" (click)="login()">Log in</a></span></p>
+        </div>
+        <mat-form-field appearance="fill">
+            <mat-label class="Username">Username</mat-label>
+            <input matInput #input maxlength="50" type="text" name="username" [formControl]="username" [class.invalid]="username.invalid && username.touched">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label class="Password">Password</mat-label>
+            <input matInput #input maxlength="50" type="password" name="password" [formControl]="password" [class.invalid]="password.invalid && password.touched">
+            <mat-hint>Use 8 or more characters with a mix of letters, numbers & symbols</mat-hint>
+            <mat-error *ngIf="password.dirty && password.errors?.pattern">
+                <strong>Use 8 or more characters with a mix of letters, numbers & symbols</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput #input maxlength="50" type="password" name="password2" [formControl]="password2" [class.invalid]="password2.invalid && password2.touched">
+            <mat-error *ngIf="password2.hasError('required')">Please confirm your password</mat-error>
+            <mat-error *ngIf="password2.invalid && !password2.hasError('required')">Passwords don't match</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>First Name</mat-label>
+            <input matInput #input maxlength="50" type="text" name="firstName" [formControl]="firstName" [class.invalid]="firstName.invalid && firstName.touched">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Last Name</mat-label>
+            <input matInput #input maxlength="50" type="text" name="lastName" [formControl]="lastName" [class.invalid]="lastName.invalid && lastName.touched">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput #input maxlength="50" type="text" name="email" [formControl]="email" [class.invalid]="email.invalid && email.touched">
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Image Url</mat-label>
+            <input matInput #input maxlength="50" type="text" name="imageUrl" [formControl]="imageUrl" [class.invalid]="imageUrl.invalid && imageUrl.touched">
+        </mat-form-field> -->
+        <p>Profile Picture</p>
+        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+
+        <div class="buttons" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="12px">
+            <button mat-raised-button color="primary" class="create-button" type="submit" [disabled]="registerForm.invalid">Create an account</button>
+            <button mat-button class="button1" mat-dialog-close>Cancel</button>
+        </div>
+    </div>
+</form>

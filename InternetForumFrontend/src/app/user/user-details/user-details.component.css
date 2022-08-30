@@ -1,0 +1,26 @@
+.example-header-image {
+    background-size: cover;
+}
+
+mat-card {
+    width: 50%;
+    margin-top: 8px;
+}
+
+.card-user {
+    margin-top: 24px;
+    width: 50%;
+    box-sizing: content-box;
+}
+
+h1 {
+    margin-bottom: 0px;
+}
+
+.btn-inactive {
+    color: #ffffff4d;
+}
+
+.hover-link {
+    cursor: pointer;
+}

@@ -1,39 +1,121 @@
 <section fxLayoutAlign="center center" fxLayout="column">
-    <div fxLayoutAlign="start start" fxLayout="column">
-        <mat-card>
-            <mat-card-title>{{ post.postTitle }}</mat-card-title>
-            <mat-card-content>{{ post.postContent }} </mat-card-content>
+    <!-- COMMUNITY SECTION -->
+    <div class="card-add" fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="card" fxLayout="row">
+            <h1 *ngIf="post?.community">{{post.community.communityName}}</h1>
+            <button class="btn-join" *ngIf="!isJoined && isLoggedIn" mat-button color="primary" (click)="joinOrLeaveCommunity(true)">Join</button>
+            <div (mouseover)="changeText=true" (mouseout)="changeText=false">
+                <button class="btn-join" *ngIf="isJoined && !changeText" mat-button color="primary" (click)="joinOrLeaveCommunity(false)">Joined</button>
+                <button class="btn-join" *ngIf="isJoined && changeText" mat-button color="accent" (click)="joinOrLeaveCommunity(false)">Leave</button>
+            </div>
+        </div>
+        <button mat-flat-button color="primary" (click)="addPost()">Create Post</button>
+    </div>
+
+
+
+
+    <mat-card *ngIf="post" class="mat-elevation-z0">
+        <!-- CARD HEADER -->
+        <div fxLayoutAlign="space-between begin">
+            <mat-card-header>
+                <img mat-card-avatar class="post-user-image" [src]="createImgPath(post.user.imageUrl)">
+                <mat-card-title class="hover-link" routerLink="/details/{{post.community.communityId}}/{{post.postId}}">{{ post.postTitle }}
+                </mat-card-title>
+                <mat-card-subtitle class="hover-link" routerLink="/user/{{post.user.username}}">by {{post.user.username}}
+                </mat-card-subtitle>
+            </mat-card-header>
+            <div fxLayout="row">
+                <mat-card-subtitle class="hover-link" routerLink="/posts/{{communityId}}">{{post.community.communityName}}
+                </mat-card-subtitle>
+            </div>
+        </div>
+        <!-- CARD CONTENT -->
+        <div *ngIf="!post.isSpoiler">
+            <div *ngIf="post.link">
+                <span>Link: </span><a href="{{post.link}}" target="_blank">{{post.link}}</a>
+            </div>
+            <img mat-card-image *ngIf="post.imageUrl" [src]="createImgPath(post.imageUrl)" onError="angular.element(this).scope().product.img = false" class="hover-link" routerLink="/details/{{post.community.communityId}}/{{post.postId}}">
+            <div fxLayout="row" fxLayoutAlign="space-between begin">
+                <div class="hover-link" routerLink="/details/{{post.community.communityId}}/{{post.postId}}">
+                    <mat-card-content *ngIf="post.postContent">{{ post.postContent }} </mat-card-content>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <button mat-stroked-button color="accent" *ngIf="post.isSpoiler" (click)="showSpoiler(post)">Show spoiler</button>
+        </div>
+        <!-- CARD ACTIONS -->
+        <mat-card-actions div fxLayout="row" fxLayoutAlign="space-between none">
+            <div>
+                <button mat-icon-button color="primary" (click)="likePost()">
+            <mat-icon>expand_less</mat-icon>
+        </button> {{ post.postVote.voteCount }}
+                <button mat-icon-button color="accent" (click)="dislikePost()">
+            <mat-icon>expand_more</mat-icon>
+        </button>
+                <!-- TODO: check if user liked or disliked the post and change the color of the buttons, right now I get an array of each post (post is an object)
+             each of these posts has postvotes and inside there's an object userPostVotes. userPostVotes is returned as an array and I can't access the values because
+             userPostVotes is actually a UserPostVotes object, so i can't even check array length with .length or anything like that. I need to look into this.
+        -->
+                <button mat-icon-button *ngIf="post.postVote.userPostVotes == null || post.postVote.userPostVotes.postVoteDirection == 0" class="btn-inactive" (click)="dislikePost()">
+            <mat-icon>expand_more</mat-icon>
+        </button>
+                <button class="btn-inactive" mat-button color="primary" routerLink="/details/{{post.community.communityId}}/{{post.postId}}" fragment="comments">Comments</button>
+                <button class="btn-inactive" *ngIf="post.user.userId == userId && isLoggedIn" mat-button color="accent" (click)="editPost()">Edit</button>
+                <button class="btn-inactive" *ngIf="post.user.userId == userId && isLoggedIn" mat-button color="accent">Delete</button>
+            </div>
+            <div>
+                <button mat-button disabled>
+                    {{ post.viewsCount | shortNumber }} Views
+                </button>
+                <button mat-button disabled>
+                    {{ post.dateCreated | date:'MMM d, y, h:mm a' | timeago}}
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+
+
+
+    <!-- POST COMMENTS -->
+    <div fxLayout="column" fxLayoutAlign="center center" class="comments-list" id="comments-section">
+        <h1 class="h1-bold">COMMENTS</h1>
+        <mat-card class="comment" class="mat-elevation-z0 card-comment">
+            <!-- ADD POST COMMENT -->
+            <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+                <div fxLayout="column">
+                    <mat-form-field class="example-form-field">
+                        <mat-label class="opis">Add to the discussion</mat-label>
+                        <textarea cdkTextareaAutosize class="text-area" matInput #input maxlength="500" type="text" name="commentContent" #commentContent="ngModel" ngModel required [class.invalid]="commentContent.invalid && commentContent.touched"></textarea>
+                    </mat-form-field>
+                    <button mat-flat-button color="primary" type="submit" [disabled]="!form.form.valid">
+                            Comment
+                        </button>
+                    <!-- POST COMMENTS LIST -->
+                </div>
+            </form>
+        </mat-card>
+        <mat-card *ngFor="let postComment of postComments" class="mat-elevation-z0 card-comment">
+            <mat-card-content>{{ postComment.commentContent }} </mat-card-content>
             <mat-card-actions div fxLayout="row" fxLayoutAlign="space-between none">
                 <div>
-                    <button class="btn-inactive" mat-button color="accent">Like</button>
-                    <button class="btn-inactive" mat-button color="accent">1 Comment</button>
-                    <button class="btn-inactive" mat-button color="accent">Share</button>
+                    <button mat-icon-button color="primary" (click)="likePostComment(postComment)">
+                            <mat-icon>expand_less</mat-icon>
+                        </button> {{ postComment.postCommentVote.voteCount }}
+                    <button mat-icon-button color="accent" (click)="dislikePostComment(postComment)">
+                            <mat-icon>expand_more</mat-icon>
+                        </button>
+
+                    <button class="btn-inactive" *ngIf="postComment.user.userId == userId && isLoggedIn" mat-button color="accent">Edit</button>
+                    <button class="btn-inactive" *ngIf="postComment.user.userId == userId && isLoggedIn" mat-button color="accent" (click)="deletePostComment(postComment)">Delete</button>
                 </div>
                 <div>
-                    <button mat-button disabled>85.4k Views</button>
-                    <button mat-button disabled>6 hours ago</button>
+                    <button mat-button disabled>by {{ postComment.user.username }}</button>
+                    <button mat-button disabled>{{ postComment.dateCreated | date:'MMM d, y, h:mm a' |
+                            timeago}}</button>
                 </div>
             </mat-card-actions>
-        </mat-card>
-
-        <!-- POST COMMENTS -->
-        <mat-card>
-            <mat-card-title>COMMENTS</mat-card-title>
-            <mat-card class="comment" *ngFor="let comment of postComments">
-                <mat-card-title>{{ comment.commentContent }}</mat-card-title>
-                <mat-card-content>{{ comment.dateCreated | date:'MMM d, y, h:mm a' }} </mat-card-content>
-                <mat-card-actions div fxLayout="row" fxLayoutAlign="space-between none">
-                    <div>
-                        <button class="btn-inactive" mat-button color="accent">Like</button>
-                        <button class="btn-inactive" mat-button color="accent">1 Comment</button>
-                        <button class="btn-inactive" mat-button color="accent">Share</button>
-                    </div>
-                    <div>
-                        <button mat-button disabled>12.4k Likes</button>
-                        <button mat-button disabled>{{ comment.dateCreated | date:'MMM d, y, h:mm a' }}</button>
-                    </div>
-                </mat-card-actions>
-            </mat-card>
         </mat-card>
     </div>
 </section>

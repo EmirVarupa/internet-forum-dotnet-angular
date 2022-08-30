@@ -1,32 +1,29 @@
-<!-- <mat-sidenav-container class="example-container">
-    TODO: ADD PROPERTY BINDING SO THAT HEADER CAN CLOSE THE SIDENAV
-    <mat-sidenav mode="side" opened>
-        Communities
-        <mat-selection-list #shoes [multiple]="false">
-            <mat-list-option *ngFor="let community of communities" [value]="community">
-                {{community.communityName}}
-            </mat-list-option>
-        </mat-selection-list>
-
-    </mat-sidenav>
-    <mat-sidenav-content>Community content
-        TODO: list posts
-        <mat-card *ngFor="let post of posts" [value]="post">
-
-        </mat-card>
-        <br>
-        <button mat-raised-button (click)="addCommunity()">+</button>
-    </mat-sidenav-content>
-</mat-sidenav-container> -->
-
-<mat-nav-list>
-    <a mat-list-item *ngFor="let community of communities" routerLink="/signup" (click)="onClose()">
-        <span class="nav-caption">{{community.communityName}}</span>
-    </a>
-    <mat-list-item>
-        <button mat-icon-button (click)="onLogout()">
-            <mat-icon>eject</mat-icon>
-            <span class="nav-caption">Logout</span>
-        </button>
-    </mat-list-item>
-</mat-nav-list>
+<div class="div-side-menu" fxLayout="column" fxLayoutAlign="space-between none">
+    <div>
+        <mat-nav-list>
+            <a class="logo" fxLayout="row" fxLayoutAlign="center none" routerLink="/" (click)="onClose()">
+            Emir<span class="custom-theme-primary-1">.</span>V</a>
+            <hr>
+            <p *ngIf="userAdminCommunities.length != 0" class="community-list-title">Moderating Communities</p>
+            <a mat-list-item *ngFor="let userAdminCommunity of userAdminCommunities" routerLink="/posts/{{userAdminCommunity.communityId}}" (click)="onClose()">
+                <span class="nav-caption">{{userAdminCommunity.community?.communityName}}</span>
+            </a>
+            <hr *ngIf="userAdminCommunities.length != 0">
+            <p *ngIf="userCommunities.length != 0" class="community-list-title">Your Communities</p>
+            <a mat-list-item *ngFor="let userCommunity of userCommunities" routerLink="/posts/{{userCommunity.communityId}}" (click)="onClose()">
+                <span class="nav-caption">{{userCommunity.community?.communityName}}</span>
+            </a>
+            <hr *ngIf="userCommunities.length != 0">
+            <p class="community-list-title">All Communities</p>
+            <a mat-list-item *ngFor="let community of communities" routerLink="/posts/{{community.communityId}}" (click)="onClose()">
+                <span class="nav-caption">{{community.communityName}}</span>
+            </a>
+        </mat-nav-list>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end none">
+        <button mat-button (click)="onLogout()">
+        <mat-icon class="icon">logout</mat-icon>
+        <span class="nav-caption"> Log Out</span>
+    </button>
+    </div>
+</div>

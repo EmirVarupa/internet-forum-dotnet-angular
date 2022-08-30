@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@import '~@angular/material/theming';
+@include mat-core();
+// Define a dark theme
+// $dark-primary: mat.define-palette(mat.$pink-palette);
+// $dark-accent: mat.define-palette(mat.$cyan-palette);
+// $dark-warn: mat.define-palette(mat.$red-palette)
+$custom-theme-primary: mat-palette($mat-pink);
+$custom-theme-accent: mat-palette($mat-cyan);
+$custom-theme-warn: mat-palette($mat-red);
+$app-theme: mat-dark-theme($custom-theme-primary, $custom-theme-accent, $custom-theme-warn);
+@include angular-material-theme($app-theme);
+.custom-theme-primary-1 {
+    color: mat.get-color-from-palette($custom-theme-primary, 500);
+}
+
+.custom-theme-primary-2 {
+    color: mat.get-color-from-palette($custom-theme-primary, 300);
+}
+
+$primary-light: mat.get-color-from-palette($custom-theme-primary, 300);

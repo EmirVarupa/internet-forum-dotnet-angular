@@ -5,66 +5,74 @@ using System.Threading.Tasks;
 using API.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.Data.Repos
+namespace API.Data.Repos;
+
+public class CommunityRepo : ICommunityRepo
 {
-    public class CommunityRepo : ICommunityRepo
+    private readonly ForumContext _context;
+
+    public CommunityRepo(ForumContext context)
     {
-        private readonly ForumContext _context;
+        _context = context;
+    }
 
-        public CommunityRepo(ForumContext context)
-        {
-            _context = context;
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>List of communities</returns>
-        public async Task<IEnumerable<Community>> GetCommunitiesAsync()
-        {
-            return await _context.Communities
-                .Include(c => c.CommunityType)
-                .ToListAsync();
-        }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>List of communities</returns>
+    public async Task<IEnumerable<Community>> GetCommunitiesAsync()
+    {
+        return await _context.Communities
+            .Include(c => c.CommunityType)
+            .Where(p => p.IsArchived == false)
+            .ToListAsync();
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="community"></param>
-        public async Task AddCommunityAsync(Community community)
-        {
-            await _context.Communities.AddAsync(community);
-            await _context.SaveChangesAsync();
-        }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="community"></param>
+    public async Task AddCommunityAsync(Community community)
+    {
+        await _context.Communities.AddAsync(community);
+        await _context.SaveChangesAsync();
+    }
 
-        public async Task<Community> GetCommunityByIdAsync(int id)
-        {
-            var todoFromDb = await _context.Communities
-                .Include(c => c.CommunityType)
-                .SingleOrDefaultAsync(c => c.CommunityId == id);
+    public async Task<Community> GetCommunityByIdAsync(int id)
+    {
+        var todoFromDb = await _context.Communities
+            .Include(c => c.CommunityType)
+            .Where(p => p.IsArchived == false)
+            .SingleOrDefaultAsync(c => c.CommunityId == id);
+            
 
-            return todoFromDb;
-        }
+        return todoFromDb;
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="community"></param>
-        /// <returns></returns>
-        public async Task<bool> UpdateCommunityByIdAsync(int id, Community community)
-        {
-            var communityFromDb = await GetCommunityByIdAsync(id);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="community"></param>
+    /// <returns></returns>
+    public async Task<bool> UpdateCommunityByIdAsync(int id, Community community)
+    {
+        var communityFromDb = await GetCommunityByIdAsync(id);
 
-            if (communityFromDb == null)
-            {
-                return false;
-            }
+        if (communityFromDb == null) return false;
 
-            communityFromDb.CommunityName = community.CommunityName;
-            communityFromDb.CommunitySummary = community.CommunitySummary;
-            communityFromDb.CommunityTypeId = community.CommunityTypeId;
+        communityFromDb.CommunityName = community.CommunityName;
+        communityFromDb.CommunitySummary = community.CommunitySummary;
+        communityFromDb.CommunityTypeId = community.CommunityTypeId;
 
-            return await _context.SaveChangesAsync() >= 0;
-        }
+        return await _context.SaveChangesAsync() >= 0;
+    }
 
+    public async Task<bool> ArchiveCommunityByIdAsync(int id)
+    {
+        var communityFromDb = _context.Communities.FirstOrDefault(p => p.CommunityId == id);
+        if (communityFromDb == null) return false;
+        communityFromDb.IsArchived = true;
+
+        return await _context.SaveChangesAsync() >= 0;
     }
 }

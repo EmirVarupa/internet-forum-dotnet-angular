@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using API.Data.Dtos.Roles;
 using API.Data.Models;
 
-namespace API.Data.Services
+namespace API.Data.Services;
+
+public interface IRoleService
 {
-    public interface IRoleService
-    {
-        Task<IEnumerable<Role>> GetRoleAsync();
+    Task<IEnumerable<Role>> GetRoleAsync();
 
-        Task<RoleReadDto> GetRoleByIdAsync(int id);
+    Task<RoleReadDto> GetRoleByIdAsync(int id);
 
-        Task AddRoleAsync(RoleCreateDto roleCreateDto);
+    Task AddRoleAsync(RoleCreateDto roleCreateDto);
 
-        Task<bool> UpdateRoleAsync(int id, RoleUpdateDto roleUpdateDto);
-    }
+    Task<bool> UpdateRoleAsync(int id, RoleUpdateDto roleUpdateDto);
 }

@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace API.Migrations
 {
     [DbContext(typeof(ForumContext))]
@@ -15,16 +17,18 @@ namespace API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.5")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("API.Data.Models.Community", b =>
                 {
                     b.Property<int>("CommunityId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommunityId"), 1L, 1);
 
                     b.Property<string>("CommunityName")
                         .IsRequired()
@@ -39,6 +43,9 @@ namespace API.Migrations
                     b.Property<int>("CommunityTypeId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
+
                     b.HasKey("CommunityId");
 
                     b.HasIndex("CommunityTypeId");
@@ -50,8 +57,9 @@ namespace API.Migrations
                 {
                     b.Property<int>("TypeId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TypeId"), 1L, 1);
 
                     b.Property<string>("TypeName")
                         .IsRequired()
@@ -67,8 +75,9 @@ namespace API.Migrations
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"), 1L, 1);
 
                     b.Property<int>("CommunityId")
                         .HasColumnType("int");
@@ -77,28 +86,24 @@ namespace API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImageUrl")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsSpoiler")
                         .HasColumnType("bit");
 
                     b.Property<string>("Link")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostContent")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostTitle")
                         .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("Upvotes")
-                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -119,8 +124,9 @@ namespace API.Migrations
                 {
                     b.Property<int>("CommentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"), 1L, 1);
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
@@ -131,9 +137,11 @@ namespace API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("PostId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("CommentId");
@@ -143,6 +151,28 @@ namespace API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PostComments");
+                });
+
+            modelBuilder.Entity("API.Data.Models.PostCommentVote", b =>
+                {
+                    b.Property<int>("VoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoteId"), 1L, 1);
+
+                    b.Property<int>("CommentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VoteCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("VoteId");
+
+                    b.HasIndex("CommentId")
+                        .IsUnique();
+
+                    b.ToTable("PostCommentVotes");
                 });
 
             modelBuilder.Entity("API.Data.Models.PostTag", b =>
@@ -157,15 +187,38 @@ namespace API.Migrations
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("Post_Tag");
+                    b.ToTable("Posts_Tags", (string)null);
+                });
+
+            modelBuilder.Entity("API.Data.Models.PostVote", b =>
+                {
+                    b.Property<int>("VoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VoteId"), 1L, 1);
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VoteCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("VoteId");
+
+                    b.HasIndex("PostId")
+                        .IsUnique();
+
+                    b.ToTable("PostVotes");
                 });
 
             modelBuilder.Entity("API.Data.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"), 1L, 1);
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -181,8 +234,9 @@ namespace API.Migrations
                 {
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"), 1L, 1);
 
                     b.Property<string>("TagName")
                         .IsRequired()
@@ -198,8 +252,9 @@ namespace API.Migrations
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"), 1L, 1);
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -215,24 +270,39 @@ namespace API.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ImageUrl")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Password")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("TokenCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("TokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -248,7 +318,7 @@ namespace API.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Data.Models.UserCommunityAdmin", b =>
+            modelBuilder.Entity("API.Data.Models.UserCommunity", b =>
                 {
                     b.Property<int>("CommunityId")
                         .HasColumnType("int");
@@ -256,19 +326,63 @@ namespace API.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsJoined")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CommunityId", "UserId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Users_CommunityAdmin");
+                    b.ToTable("Users_Communities", (string)null);
+                });
+
+            modelBuilder.Entity("API.Data.Models.UserPostCommentVote", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostCommentVoteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostCommentVoteDirection")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "PostCommentVoteId");
+
+                    b.HasIndex("PostCommentVoteId");
+
+                    b.ToTable("Users_PostCommentVotes", (string)null);
+                });
+
+            modelBuilder.Entity("API.Data.Models.UserPostVote", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostVoteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostVoteDirection")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "PostVoteId");
+
+                    b.HasIndex("PostVoteId");
+
+                    b.ToTable("Users_PostVotes", (string)null);
                 });
 
             modelBuilder.Entity("API.Data.Models.UserStatus", b =>
                 {
                     b.Property<int>("StatusId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"), 1L, 1);
 
                     b.Property<string>("StatusName")
                         .IsRequired()
@@ -314,15 +428,30 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Data.Models.Post", "Post")
                         .WithMany("PostComments")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("API.Data.Models.User", "User")
                         .WithMany("PostComments")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Data.Models.PostCommentVote", b =>
+                {
+                    b.HasOne("API.Data.Models.PostComment", "PostComment")
+                        .WithOne("PostCommentVote")
+                        .HasForeignKey("API.Data.Models.PostCommentVote", "CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PostComment");
                 });
 
             modelBuilder.Entity("API.Data.Models.PostTag", b =>
@@ -344,6 +473,17 @@ namespace API.Migrations
                     b.Navigation("Tag");
                 });
 
+            modelBuilder.Entity("API.Data.Models.PostVote", b =>
+                {
+                    b.HasOne("API.Data.Models.Post", "Post")
+                        .WithOne("PostVote")
+                        .HasForeignKey("API.Data.Models.PostVote", "PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("API.Data.Models.User", b =>
                 {
                     b.HasOne("API.Data.Models.Role", "Role")
@@ -363,16 +503,16 @@ namespace API.Migrations
                     b.Navigation("UserStatus");
                 });
 
-            modelBuilder.Entity("API.Data.Models.UserCommunityAdmin", b =>
+            modelBuilder.Entity("API.Data.Models.UserCommunity", b =>
                 {
                     b.HasOne("API.Data.Models.Community", "Community")
-                        .WithMany("UserCommunityAdmins")
+                        .WithMany("UserCommunities")
                         .HasForeignKey("CommunityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Models.User", "User")
-                        .WithMany("UserCommunityAdmins")
+                        .WithMany("UserCommunities")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -382,11 +522,49 @@ namespace API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Data.Models.UserPostCommentVote", b =>
+                {
+                    b.HasOne("API.Data.Models.PostCommentVote", "PostCommentVote")
+                        .WithMany("UserPostCommentVotes")
+                        .HasForeignKey("PostCommentVoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Data.Models.User", "User")
+                        .WithMany("UserPostCommentVotes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PostCommentVote");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Data.Models.UserPostVote", b =>
+                {
+                    b.HasOne("API.Data.Models.PostVote", "PostVote")
+                        .WithMany("UserPostVotes")
+                        .HasForeignKey("PostVoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Data.Models.User", "User")
+                        .WithMany("UserPostVotes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PostVote");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("API.Data.Models.Community", b =>
                 {
                     b.Navigation("Posts");
 
-                    b.Navigation("UserCommunityAdmins");
+                    b.Navigation("UserCommunities");
                 });
 
             modelBuilder.Entity("API.Data.Models.CommunityType", b =>
@@ -399,6 +577,25 @@ namespace API.Migrations
                     b.Navigation("PostComments");
 
                     b.Navigation("PostTags");
+
+                    b.Navigation("PostVote")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("API.Data.Models.PostComment", b =>
+                {
+                    b.Navigation("PostCommentVote")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("API.Data.Models.PostCommentVote", b =>
+                {
+                    b.Navigation("UserPostCommentVotes");
+                });
+
+            modelBuilder.Entity("API.Data.Models.PostVote", b =>
+                {
+                    b.Navigation("UserPostVotes");
                 });
 
             modelBuilder.Entity("API.Data.Models.Role", b =>
@@ -417,7 +614,11 @@ namespace API.Migrations
 
                     b.Navigation("Posts");
 
-                    b.Navigation("UserCommunityAdmins");
+                    b.Navigation("UserCommunities");
+
+                    b.Navigation("UserPostCommentVotes");
+
+                    b.Navigation("UserPostVotes");
                 });
 
             modelBuilder.Entity("API.Data.Models.UserStatus", b =>

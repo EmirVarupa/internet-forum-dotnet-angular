@@ -1,0 +1,6 @@
+@import "/src/styles.scss";
+.login:hover {
+    cursor: pointer;
+    color: $primary-light;
+    transition: 0.4s;
+}

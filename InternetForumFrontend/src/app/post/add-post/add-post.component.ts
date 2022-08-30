@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Community } from 'src/app/Models/Community';
 import { Post } from 'src/app/Models/Post';
 import { User } from 'src/app/Models/User';
@@ -21,71 +22,50 @@ export class AddPostComponent implements OnInit {
   link!: string;
   isSpoiler = false;
   newPost: Post = new Post();
+  response!: {dbPath: ''};
 
-  constructor(private dialog: MatDialog, private postsService: PostsService, private communitiesService: CommunitiesService) { }
+  // defaultCommunity: number = this.data.communityId;
+  // communityDefault: any;
+
+  constructor(private dialog: MatDialog, private postsService: PostsService, private communitiesService: CommunitiesService, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this.communitiesService.getCommunities().subscribe(res=>{
-      this.communities = res;
-    });
+    // this.communitiesService.getCommunities().subscribe(res => {
+    //   this.communities = res;
+
+      
+    //   // this.communityDefault = this.communities.find(c => c.communityId === 3);
+    //   // console.log(this.defaultCommunity)
+    // });
+
+
+    // this.addPost.controls
   }
 
   onSubmit() {
-    console.log(this.newPost);
-      this.postsService.addPost(this.newPost).subscribe();
-      this.dialog.closeAll();
+    this.newPost.userId = this.data.userId;
+    this.newPost.communityId = this.data.communityId;
+    if(this.response != undefined){
+      this.newPost.imageUrl = this.response.dbPath;
     }
+    
+    console.log(this.newPost);
+    this.postsService.addPost(this.newPost).subscribe();
+    this.dialog.closeAll();
+  }
 
-    // TODO: UNSUBSCRIBE
-    closeContainer() {
-        this.dialog.closeAll();
-      }
+  comparer(o1: any, o2: any): boolean {
+    // if possible compare by object's name, and not by reference.
+    return o1 && o2 ? o1.label === o2.label : o2 === o2;
+  }
+
+  uploadFinished = (event : any) => { 
+    this.response = event; 
+  }
   
-  // TEST
-
-  // communityTypes: Array<CommunityType> = [];
-  // communityName!: string;
-  // communitySummary!: string;
-  // newCommunity: Community = new Community();
-
-  // constructor(private dialog: MatDialog, private communitiesService: CommunitiesService, private communityTypesService: CommunityTypesService) { }
-
-
-  // ngOnInit(): void {
-  //   this.communityTypesService.getCommunityTypes()
-  //     .subscribe(res => {
-  //       this.communityTypes = res;
-  //     });
-  // }
-
-  // onSubmit() {
-  //   this.communitiesService.addCommunity(this.newCommunity).subscribe();
-  //   this.dialog.closeAll();
-  // }
-
-  // closeContainer() {
-  //   this.dialog.closeAll();
-  // }
-
-
-// COMMUNITY
-// {
-//   "communityTypeId": 0,
-//   "communityName": "string",
-//   "communitySummary": "string"
-// }
-
-
-// POST
-// {
-//   "communityId": 0,
-//   "userId": 0,
-//   "postTitle": "string",
-//   "postContent": "string",
-//   "imageUrl": "string",
-//   "link": "string",
-//   "isSpoiler": true
-// }
-
+  public createImgPath = (serverPath: string) => { 
+    serverPath.replace(/\\/g, "/");
+    return `https://localhost:5001/${serverPath}`; 
+  }
 
 }

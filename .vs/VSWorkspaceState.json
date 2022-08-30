@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\InternetForumBackend",
+    "\\InternetForumBackend\\API\\Controllers",
+    "\\InternetForumBackend\\API\\Data",
+    "\\InternetForumBackend\\API\\Data\\Dtos",
+    "\\InternetForumBackend\\API\\Data\\Dtos\\Community",
+    "\\InternetForumBackend\\API\\Migrations",
+    "\\InternetForumBackend\\API\\obj",
+    "\\InternetForumBackend\\API\\Properties",
+    "\\InternetForumBackend\\InternetForumBackend"
+  ],
+  "SelectedNode": "\\InternetForumBackend\\InternetForumBackend.sln",
+  "PreviewInSolutionExplorer": false
+}

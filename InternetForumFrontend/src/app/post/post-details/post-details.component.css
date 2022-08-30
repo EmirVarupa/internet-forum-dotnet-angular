@@ -1,9 +1,51 @@
 mat-card {
-    width: 100%;
+    width: 50%;
     margin-top: 8px;
 }
 
-.comment {
-    background: #303030;
+.upvotes {
+    display: inline;
+}
+
+.h1-bold {
+    width: 50%;
+    font-weight: 500;
+}
+
+.comments-list {
+    width: 100%;
+    padding: 16px;
+}
+
+.post-user-image {
+    margin-bottom: 16px;
+}
+
+.hover-link {
+    cursor: pointer;
+}
+
+.card-comment {
     box-sizing: border-box;
+}
+
+.btn-inactive {
+    color: #ffffff4d;
+}
+
+.card-add {
+    margin-top: 24px;
+    width: 50%;
+    box-sizing: content-box;
+}
+
+.mat-card-image {
+    height: 20vw;
+    object-fit: scale-down;
+}
+
+a {
+    color: #f48fb1;
+    cursor: pointer;
+    text-decoration: none;
 }
